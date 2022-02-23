@@ -18,5 +18,29 @@ namespace API.Controllers
         {
             return _districtService.GetAll();
         }
+
+        [HttpGet("{id}", Name = "GetDistrict")]
+        public District GetById(int id)
+        {
+            return _districtService.GetById(id);
+        }
+
+        [HttpPost]
+        public void Create(District district)
+        {
+            _districtService.Create(district);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _districtService.Delete(id);
+        }
+
+        [HttpPut("{id}")]
+        public void Update(int id, District district)
+        {
+            _districtService.Update(id, district);
+        }
     }
 }

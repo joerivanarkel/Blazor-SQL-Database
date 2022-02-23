@@ -18,5 +18,29 @@ namespace API.Controllers
         {
             return _regionService.GetAll();
         }
+
+        [HttpGet("{id}", Name = "GetRegion")]
+        public Region GetById(int id)
+        {
+            return _regionService.GetById(id);
+        }
+
+        [HttpPost]
+        public void Create(Region region)
+        {
+            _regionService.Create(region);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _regionService.Delete(id);
+        }
+
+        [HttpPut("{id}")]
+        public void Update(int id, Region region)
+        {
+            _regionService.Update(id, region);
+        }
     }
 }

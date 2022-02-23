@@ -19,38 +19,28 @@ namespace API.Controllers
             return _personService.GetAll();
         }
 
-        // [HttpGet("{id}", Name = "GetPerson")]
-        // public IActionResult Get(int id)
-        // {
-        //     return _personService.Get(id);
-        // }
+        [HttpGet("{id}", Name = "GetPerson")]
+        public Person GetById(int id)
+        {
+            return _personService.GetById(id);
+        }
 
-        // [HttpPost]
-        // public IActionResult Create([FromBody] Person person)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
+        [HttpPost]
+        public void Create(Person person)
+        {
+            _personService.Create(person);
+        }
 
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _personService.Delete(id);
+        }
 
-        //     return _personService.Create(person);
-        // }
-
-        // [HttpPut("{id}")]
-        // public IActionResult Put(int id, [FromBody] Person person)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-        //     return _personService.Update( id, person);
-        // }
-
-        // [HttpDelete("{id}")]
-        // public IActionResult Delete(int id)
-        // {
-        //     return _personService.Delete(id);
-        // }
+        [HttpPut("{id}")]
+        public void Update(int id, Person person)
+        {
+            _personService.Update(id, person);
+        }
 }
 }

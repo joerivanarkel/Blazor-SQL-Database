@@ -18,5 +18,29 @@ namespace API.Controllers
         {
             return _cityService.GetAll();
         }
+
+        [HttpGet("{id}", Name = "GetCity")]
+        public City GetById(int id)
+        {
+            return _cityService.GetById(id);
+        }
+
+        [HttpPost]
+        public void Create(City city)
+        {
+            _cityService.Create(city);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _cityService.Delete(id);
+        }
+
+        [HttpPut("{id}")]
+        public void Update(int id, City city)
+        {
+            _cityService.Update(id, city);
+        }
     }
 }
