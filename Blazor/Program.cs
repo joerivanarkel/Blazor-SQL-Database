@@ -30,7 +30,14 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 
 //builder.Services.AddHttpClient();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(_myConfig.Url) });
+
+// Add Service per Table
+builder.Services.AddTransient<ICityServiceUI, CityServiceUI>();
+builder.Services.AddTransient<IDistrictServiceUI, DistrictServiceUI>();
+builder.Services.AddTransient<INationServiceUI, NationServiceUI>();
+builder.Services.AddTransient<IOccupationServiceUI, OccupationServiceUI>();
 builder.Services.AddTransient<IPersonServiceUI, PersonServiceUI>();
+builder.Services.AddTransient<IRegionServiceUI, RegionServiceUI>();
 
 var app = builder.Build();
 

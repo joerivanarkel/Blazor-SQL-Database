@@ -1,0 +1,48 @@
+﻿@page "/occupation"
+
+<PageTitle>Occupation Table</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject IOccupationServiceUI OccupationServiceUI
+
+<h1>Occupation Table</h1>
+
+@if (occupations == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (occupations.Count() == 0)
+    {
+        <p><em>No persons found</em></p>
+    }
+    else{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var occupation in occupations)
+            {
+                <tr>
+                    <td>@occupation.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+
+}
+
+@code {
+    private IEnumerable<Data.Models.Occupation>? occupations;
+
+    protected override async Task OnInitializedAsync()
+    {
+        occupations = await OccupationServiceUI.GetOccupationAsync();
+    }
+}

@@ -14,23 +14,6 @@ namespace Blazor.Data
         public PersonServiceUI(HttpClient httpClient) =>
            _httpClient = httpClient;
 
-        // public async Task<IEnumerable<Person>> GetPersonAsync()
-        // {
-        //     IEnumerable<Person>? foundPersons = null;
-        //     //var url = _myConfig.Url + "/Person";
-        //     foundPersons= await _httpClient.GetFromJsonAsync<IEnumerable<Person>>("Person");
-        //     //var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
-        //     // var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage);
-
-        //     // if (httpResponseMessage.IsSuccessStatusCode)
-        //     // {
-        //     //     using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
-
-        //     //     foundPersons = await JsonSerializer.DeserializeAsync<IEnumerable<Person>>(contentStream);
-        //     // }
-        //      return foundPersons;
-        // }
-
         public async Task<IEnumerable<Person>> GetPersonAsync() =>
             await _httpClient.GetFromJsonAsync<IEnumerable<Person>>("Person");
 
@@ -51,16 +34,5 @@ namespace Blazor.Data
             // return foundPersons;
             return true;
         }
-
-
-
-        // private void GetConfig()
-        // {
-        //     var config = new ConfigurationBuilder()
-        //         .AddJsonFile("appsettings.json")
-        //         .AddEnvironmentVariables()
-        //         .Build();
-        //      _myConfig = config.GetSection("myConfig").Get<MyConfig>();
-        // }
     }
 }

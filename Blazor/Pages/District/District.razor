@@ -1,0 +1,48 @@
+﻿@page "/district"
+
+<PageTitle>District Table</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject IDistrictServiceUI DistrictServiceUI
+
+<h1>District Table</h1>
+
+@if (districts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (districts.Count() == 0)
+    {
+        <p><em>No persons found</em></p>
+    }
+    else{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var district in districts)
+            {
+                <tr>
+                    <td>@district.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+
+}
+
+@code {
+    private IEnumerable<Data.Models.District>? districts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        districts = await DistrictServiceUI.GetDistrictAsync();
+    }
+}

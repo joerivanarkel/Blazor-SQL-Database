@@ -3,7 +3,14 @@
 
 using Data;
 
-FillPerson();
+//FillPerson();
+// FillRegion();
+// FillOccupation();
+// FillNation();
+FillDistrict();
+FillCity();
+
+Console.WriteLine("Success");
 Console.ReadLine();
 
 void FillPerson()
@@ -20,6 +27,57 @@ void FillPerson()
 
     });
     database.SaveChanges();
+}
 
+void FillRegion()
+{
+    var database = new Database();
+    database.Regions.Add(new Common.Models.Region()
+    {
+        Name = "Utrecht"
+    });
+    database.SaveChanges();
+}
 
+void FillOccupation()
+{
+    var database = new Database();
+    database.Occupations.Add(new Common.Models.Occupation()
+    {
+        Name = "Carpenter"
+    });
+    database.SaveChanges();
+}
+
+void FillNation()
+{
+    var database = new Database();
+    database.Nations.Add(new Common.Models.Nation()
+    {
+        Name = "Netherlands",
+        Type = Common.Models.Type.Monarchy,
+        Population = 17000000
+    });
+    database.SaveChanges();
+}
+
+void FillDistrict()
+{
+    var database = new Database();
+    database.Districts.Add(new Common.Models.District()
+    {
+        Name = "Vianen",
+    });
+    database.SaveChanges();
+}
+
+void FillCity()
+{
+    var database = new Database();
+    database.Cities.Add(new Common.Models.City()
+    {
+        Name = "Utrecht",
+        Population = 358974
+    });
+    database.SaveChanges();
 }
