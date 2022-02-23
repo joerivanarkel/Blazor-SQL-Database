@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Common.Models;
 
 namespace Data.Repositories
 {
-    public class BaseRepository<T> where T : class
+    public class BaseRepository<T> where T : Entity
     {
         protected Database database;
 
@@ -16,6 +17,33 @@ namespace Data.Repositories
         public IEnumerable<T> GetAll()
         {
             return database.Set<T>().AsEnumerable();
+        }
+
+        public T GetById(int id)
+        {
+            return database.Set<T>().FirstOrDefault(a => a.Id == id);
+        }
+
+        public void Create(T entity)
+        {
+            database.Set<T>().Add(entity);
+            database.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var found = database.Set<T>().FirstOrDefault(a => a.Id == id);
+            if (found != null)
+            {
+                database.Set<T>().Remove(found);
+                database.SaveChanges();
+            }
+        }
+
+        public void Update(int id, T entity)
+        {
+            database.Set<T>().Update(entity);
+            database.SaveChanges();
         }
     }
 }

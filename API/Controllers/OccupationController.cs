@@ -18,5 +18,28 @@ namespace API.Controllers
         {
             return _occupationService.GetAll();
         }
+        [HttpGet("{id}", Name = "GetOccupation")]
+        public Occupation GetById(int id)
+        {
+            return _occupationService.GetById(id);
+        }
+
+        [HttpPost]
+        public void Create(Occupation occupation)
+        {
+            _occupationService.Create(occupation);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _occupationService.Delete(id);
+        }
+
+        [HttpPut("{id}")]
+        public void Update(int id, Occupation occupation)
+        {
+            _occupationService.Update(id, occupation);
+        }
     }
 }
