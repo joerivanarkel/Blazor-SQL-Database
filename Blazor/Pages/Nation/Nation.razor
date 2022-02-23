@@ -1,0 +1,79 @@
+﻿@page "/nation"
+
+<PageTitle>Nation Table</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject INationServiceUI NationServiceUI
+
+<h1>Nation Table</h1>
+
+@if (nations == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (nations.Count() == 0)
+    {
+        <p><em>No persons found</em></p>
+    }
+    else{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Population</th>
+                <th>Capital</th>
+                <th>Ruler</th>
+                <th>Regions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var nation in nations)
+            {
+                <tr>
+                    <td>@nation.Name</td>
+                    <td>@nation.Type</td>
+                    <td>@nation.Population</td>
+                    @if(nation.NationCapital != null)
+                    {
+                        <td>@nation.NationCapital</td>
+                    }
+                    else
+                    {
+                        <td> </td>
+                    }
+                    @if(nation.NationRuler != null)
+                    {
+                        <td>@nation.NationRuler</td>
+                    }
+                    else
+                    {
+                        <td> </td>
+                    }
+                    @if(nation.Regions != null)
+                    {
+                        <td>@nation.Regions</td>
+                    }
+                    else
+                    {
+                        <td> </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+
+}
+
+@code {
+    private IEnumerable<Data.Models.Nation>? nations;
+
+    protected override async Task OnInitializedAsync()
+    {
+        nations = await NationServiceUI.GetNationAsync();
+    }
+}
