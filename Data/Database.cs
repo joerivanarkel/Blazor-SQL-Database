@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Common.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,19 @@ namespace Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=PERENCAKE\\SQLEXPRESS;Database=21-2;user id=sa;password=123;");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+                modelBuilder.Entity<City>()
+            .HasMany(b => b.Districts)
+            .WithOne();
+
+            modelBuilder.Entity<City>()
+                .HasOne( e => e.CityRuler)
+                .WithOne()
+                .HasForeignKey<Person>(b => b.CityId); ;
+
         }
     }
 }

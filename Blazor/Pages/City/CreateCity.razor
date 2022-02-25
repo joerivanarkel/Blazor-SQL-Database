@@ -1,0 +1,67 @@
+﻿@page "/createcity"
+
+<PageTitle>Create City</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject ICityServiceUI CityServiceUI
+@inject IDistrictServiceUI DistrictServiceUI
+@inject IPersonServiceUI PersonServiceUI
+
+<h1>Create City</h1>
+
+@if (persons == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model=@city OnSubmit="Create">
+        <div class="container">
+        <div class="row">
+        <div class="col-md-auto">
+            <label for="NameInput" class="form-label">Name:</label>
+            <input @bind="city.Name" type="text" id="NameInput" name="CityName" class="form-control"><br>
+
+            <label for="PopInput" class="form-label">Population:</label>
+            <input @bind="city.Population" type="int" id="PopInput" name="CityPop" class="form-control"><br>
+
+            <label for="PopInput" class="form-label">Ruler:</label>
+            <datalist id="PersonInputList" >
+                @foreach (var person in persons)
+                {
+                    var fullname = person.firstName + " " + person.lastName;
+                    <option value=@person.firstName label="@fullname"></option>
+                }
+            </datalist>
+                <input list="PersonInputList" class="form-control" @onchange="@((args) => name = args.Value.ToString())">
+
+            <br>
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+        </div>
+  </div>
+    </EditForm>
+}
+
+@code
+{
+    private City city = new City();
+    private string name;
+
+    private Person SelectedPerson() =>
+        persons.FirstOrDefault( x=> x.firstName == name);
+    private IEnumerable<District>? districts;
+    private IEnumerable<Person>? persons;
+
+    protected override async Task OnInitializedAsync()
+    {
+        districts = await DistrictServiceUI.GetDistrictAsync();
+        persons = await PersonServiceUI.GetPersonAsync();
+    }
+    private void Create()
+    {
+        city.CityRuler = SelectedPerson();
+        CityServiceUI.CreateCityAsync(city);
+    }
+}

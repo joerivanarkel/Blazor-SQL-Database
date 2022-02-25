@@ -26,7 +26,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public void Create(City city)
+        public void Create( [FromBody]  City city)
         {
             _cityService.Create(city);
         }

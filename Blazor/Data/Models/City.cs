@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.Data.Models
 {
-    public class City
+    public class City : Entity
     {
         public string Name { get; set; }
         public virtual Person? CityRuler { get; set; }

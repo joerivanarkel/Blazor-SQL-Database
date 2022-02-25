@@ -14,5 +14,8 @@ namespace Common.Models
         public Sex Sex { get; set; }
         public bool IsRuler { get; set; }
         public virtual Occupation? Occupation { get; set; }
+
+        public int CityId { get; set; }
+        public City City { get; set; }
     }
 }

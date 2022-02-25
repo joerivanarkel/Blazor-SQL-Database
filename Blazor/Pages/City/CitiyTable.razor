@@ -6,7 +6,8 @@
 @using Data.Models
 @inject ICityServiceUI CityServiceUI
 
-<h1>City Table</h1>
+<h1>City Table</h1> 
+<a href="/createcity">(Create New)</a>
 
 @if (cities == null)
 {
@@ -26,10 +27,13 @@ else
                 <th>Population</th>
                 <th>Ruler</th>
                 <th>Districts</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Update</th>
             </tr>
         </thead>
         <tbody>
-                @foreach (var city in cities)
+            @foreach (var city in cities)
             {
                 <tr>
                     <td>@city.Name</td>
@@ -50,6 +54,9 @@ else
                     {
                         <td> </td>
                     }
+                    <td><a href="/editcity?id=@city.Id">Edit</a></td>
+                    <td><a href="/deletecity?id=@city.Id">Delete</a></td>
+                    <td><a href="/updatecity?id=@city.Id">Update</a></td>
                 </tr>
             }
         </tbody>
@@ -59,10 +66,10 @@ else
 }
 
 @code {
-    private IEnumerable<Data.Models.City>? cities;
+    private IEnumerable<City>? cities;
 
     protected override async Task OnInitializedAsync()
     {
-        cities = await CityServiceUI.GetCityAsync();
+        cities = await CityServiceUI.GetCitiesAsync();
     }
 }
