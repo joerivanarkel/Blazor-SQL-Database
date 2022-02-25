@@ -24,7 +24,7 @@ namespace Data.Repositories
             return database.Set<T>().FirstOrDefault(a => a.Id == id);
         }
 
-        public void Create(T entity)
+        public virtual void Create(T entity)
         {
             database.Set<T>().Add(entity);
             database.SaveChanges();
