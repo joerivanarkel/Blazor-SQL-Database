@@ -58,6 +58,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        persons = await PersonServiceUI.GetPersonAsync();
+        persons = await PersonServiceUI.GetAsync();
     }
 }

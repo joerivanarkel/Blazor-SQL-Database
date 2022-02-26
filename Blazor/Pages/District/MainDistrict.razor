@@ -1,20 +1,20 @@
-﻿@page "/occupation"
+﻿@page "/district"
 
-<PageTitle>Occupation Table</PageTitle>
+<PageTitle>District Table</PageTitle>
 
 @using Blazor.Data
 @using Data.Models
-@inject IOccupationServiceUI OccupationServiceUI
+@inject IDistrictServiceUI DistrictServiceUI
 
-<h1>Occupation Table</h1>
+<h1>District Table</h1>
 
-@if (occupations == null)
+@if (districts == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    if (occupations.Count() == 0)
+    if (districts.Count() == 0)
     {
         <p><em>No persons found</em></p>
     }
@@ -26,10 +26,10 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var occupation in occupations)
+            @foreach (var district in districts)
             {
                 <tr>
-                    <td>@occupation.Name</td>
+                    <td>@district.Name</td>
                 </tr>
             }
         </tbody>
@@ -39,10 +39,10 @@ else
 }
 
 @code {
-    private IEnumerable<Data.Models.Occupation>? occupations;
+    private IEnumerable<Data.Models.District>? districts;
 
     protected override async Task OnInitializedAsync()
     {
-        occupations = await OccupationServiceUI.GetOccupationAsync();
+        districts = await DistrictServiceUI.GetAsync();
     }
 }

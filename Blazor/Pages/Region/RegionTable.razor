@@ -52,6 +52,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        regions = await RegionServiceUI.GetRegionAsync();
+        regions = await RegionServiceUI.GetAsync();
     }
 }

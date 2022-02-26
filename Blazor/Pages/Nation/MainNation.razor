@@ -74,6 +74,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        nations = await NationServiceUI.GetNationAsync();
+        nations = await NationServiceUI.GetAsync();
     }
 }
