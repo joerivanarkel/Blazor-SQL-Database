@@ -38,9 +38,9 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Update(int id, District district)
+        public void Update(District district)
         {
-            _districtService.Update(id, district);
+            _districtService.Update(district);
         }
     }
 }

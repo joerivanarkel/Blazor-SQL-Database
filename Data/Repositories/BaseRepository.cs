@@ -40,7 +40,7 @@ namespace Data.Repositories
             }
         }
 
-        public void Update(int id, T entity)
+        public void Update(T entity)
         {
             database.Set<T>().Update(entity);
             database.SaveChanges();

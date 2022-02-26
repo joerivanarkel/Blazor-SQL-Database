@@ -37,9 +37,9 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Update(int id, Occupation occupation)
+        public void Update(Occupation occupation)
         {
-            _occupationService.Update(id, occupation);
+            _occupationService.Update(occupation);
         }
     }
 }

@@ -11,6 +11,6 @@ namespace Data.Repositories
         void Delete(int id);
         IEnumerable<T> GetAll();
         T GetById(int id);
-        void Update(int id, T entity);
+        void Update(T entity);
     }
 }

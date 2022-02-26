@@ -35,9 +35,9 @@ namespace Business
             repository.Create(entity);
         }
 
-        public void Update(int id, T entity)
+        public void Update(T entity)
         {
-            repository.Update(id, entity);
+            repository.Update(entity);
         }
     }
 }
