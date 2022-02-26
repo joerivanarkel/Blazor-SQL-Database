@@ -16,16 +16,16 @@ namespace Blazor.Data
         public async Task<IEnumerable<City>> GetCitiesAsync() =>
             await _httpClient.GetFromJsonAsync<IEnumerable<City>>("City");
 
-        public async Task<City> GetCityAsync(int id) =>
+        public async Task<City> GetByIdAsync(int id) =>
             await _httpClient.GetFromJsonAsync<City>("GetCity");
 
-        public async Task CreateCityAsync(City city) =>
+        public async Task CreateAsync(City city) =>
             await _httpClient.PostAsJsonAsync<City>("City", city);
 
-        public async Task DeleteCityAsync(int id) =>
-            await _httpClient.DeleteAsync($"person/{id}");
+        public async Task DeleteAsync(int id) =>
+            await _httpClient.DeleteAsync($"City/{id}");
 
-        public async Task Update(int id, City city) =>
+        public async Task UpdateAsync(City city) =>
             await _httpClient.PutAsJsonAsync<City>("City", city);
     }
 }

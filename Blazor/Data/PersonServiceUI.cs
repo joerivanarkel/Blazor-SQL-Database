@@ -6,7 +6,6 @@ using Blazor;
 
 namespace Blazor.Data
 {
-
     public class PersonServiceUI : IPersonServiceUI
     {
         private readonly HttpClient _httpClient;
@@ -14,25 +13,19 @@ namespace Blazor.Data
         public PersonServiceUI(HttpClient httpClient) =>
            _httpClient = httpClient;
 
-        public async Task<IEnumerable<Person>> GetPersonAsync() =>
+        public async Task<IEnumerable<Person>> GetAsync() =>
             await _httpClient.GetFromJsonAsync<IEnumerable<Person>>("Person");
 
-        public async Task<bool> DeletePersonAsync()
-        {
-            // GetConfig();
-            // var url = _myConfig.Url + "/Person";
-            // var httpRequestMessage = new HttpRequestMessage(HttpMethod.Delete, url);
-            // var httpClient = _httpClientFactory.CreateClient();
-            // var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
+        public async Task<Person> GetByIdAsync(int id) =>
+            await _httpClient.GetFromJsonAsync<Person>("GetPerson");
 
-            // if (httpResponseMessage.IsSuccessStatusCode)
-            // {
-            //     using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+        public async Task CreateAsync(Person person) =>
+            await _httpClient.PostAsJsonAsync<Person>("Person", person);
 
-            //     foundPersons = await JsonSerializer.DeserializeAsync<IEnumerable<Person>>(contentStream);
-            // }
-            // return foundPersons;
-            return true;
-        }
+        public async Task DeleteAsync(int id) =>
+            await _httpClient.DeleteAsync($"Person/{id}");
+
+        public async Task UpdateAsync(Person person) =>
+            await _httpClient.PutAsJsonAsync<Person>("Person", person);
     }
 }
