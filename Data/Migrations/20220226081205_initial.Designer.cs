@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20220221151554_initial")]
+    [Migration("20220226081205_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,19 +32,28 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CityRulerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("NationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Population")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RegionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityRulerId");
+                    b.HasIndex("NationId")
+                        .IsUnique()
+                        .HasFilter("[NationId] IS NOT NULL");
+
+                    b.HasIndex("RegionId")
+                        .IsUnique()
+                        .HasFilter("[RegionId] IS NOT NULL");
 
                     b.ToTable("Cities");
                 });
@@ -83,12 +92,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NationCapitalId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NationRulerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Population")
                         .HasColumnType("int");
 
@@ -96,10 +99,6 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("NationCapitalId");
-
-                    b.HasIndex("NationRulerId");
 
                     b.ToTable("Nations");
                 });
@@ -136,6 +135,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -147,6 +149,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("NationId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("OccupationId")
                         .HasColumnType("int");
 
@@ -154,6 +159,14 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId")
+                        .IsUnique()
+                        .HasFilter("[CityId] IS NOT NULL");
+
+                    b.HasIndex("NationId")
+                        .IsUnique()
+                        .HasFilter("[NationId] IS NOT NULL");
 
                     b.HasIndex("OccupationId");
 
@@ -175,25 +188,22 @@ namespace Data.Migrations
                     b.Property<int?>("NationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RegionCapitalId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NationId");
-
-                    b.HasIndex("RegionCapitalId");
 
                     b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("Common.Models.City", b =>
                 {
-                    b.HasOne("Common.Models.Person", "CityRuler")
-                        .WithMany()
-                        .HasForeignKey("CityRulerId");
+                    b.HasOne("Common.Models.Nation", null)
+                        .WithOne("NationCapital")
+                        .HasForeignKey("Common.Models.City", "NationId");
 
-                    b.Navigation("CityRuler");
+                    b.HasOne("Common.Models.Region", null)
+                        .WithOne("RegionCapital")
+                        .HasForeignKey("Common.Models.City", "RegionId");
                 });
 
             modelBuilder.Entity("Common.Models.District", b =>
@@ -203,28 +213,19 @@ namespace Data.Migrations
                         .HasForeignKey("CityId");
                 });
 
-            modelBuilder.Entity("Common.Models.Nation", b =>
-                {
-                    b.HasOne("Common.Models.City", "NationCapital")
-                        .WithMany()
-                        .HasForeignKey("NationCapitalId");
-
-                    b.HasOne("Common.Models.Person", "NationRuler")
-                        .WithMany()
-                        .HasForeignKey("NationRulerId");
-
-                    b.Navigation("NationCapital");
-
-                    b.Navigation("NationRuler");
-                });
-
             modelBuilder.Entity("Common.Models.Person", b =>
                 {
-                    b.HasOne("Common.Models.Occupation", "Occupation")
-                        .WithMany()
-                        .HasForeignKey("OccupationId");
+                    b.HasOne("Common.Models.City", null)
+                        .WithOne("CityRuler")
+                        .HasForeignKey("Common.Models.Person", "CityId");
 
-                    b.Navigation("Occupation");
+                    b.HasOne("Common.Models.Nation", null)
+                        .WithOne("NationRuler")
+                        .HasForeignKey("Common.Models.Person", "NationId");
+
+                    b.HasOne("Common.Models.Occupation", null)
+                        .WithMany("Persons")
+                        .HasForeignKey("OccupationId");
                 });
 
             modelBuilder.Entity("Common.Models.Region", b =>
@@ -232,22 +233,32 @@ namespace Data.Migrations
                     b.HasOne("Common.Models.Nation", null)
                         .WithMany("Regions")
                         .HasForeignKey("NationId");
-
-                    b.HasOne("Common.Models.City", "RegionCapital")
-                        .WithMany()
-                        .HasForeignKey("RegionCapitalId");
-
-                    b.Navigation("RegionCapital");
                 });
 
             modelBuilder.Entity("Common.Models.City", b =>
                 {
+                    b.Navigation("CityRuler");
+
                     b.Navigation("Districts");
                 });
 
             modelBuilder.Entity("Common.Models.Nation", b =>
                 {
+                    b.Navigation("NationCapital");
+
+                    b.Navigation("NationRuler");
+
                     b.Navigation("Regions");
+                });
+
+            modelBuilder.Entity("Common.Models.Occupation", b =>
+                {
+                    b.Navigation("Persons");
+                });
+
+            modelBuilder.Entity("Common.Models.Region", b =>
+                {
+                    b.Navigation("RegionCapital");
                 });
 #pragma warning restore 612, 618
         }

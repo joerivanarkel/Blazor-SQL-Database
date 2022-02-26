@@ -2,13 +2,12 @@
 
 
 using Data;
-//FillOccupation();
-//FillPerson();
-// FillRegion();
-
-// FillNation();
-//FillDistrict();
+FillOccupation();
+FillRegion();
+FillNation();
+FillDistrict();
 FillCity();
+FillPerson();
 
 Console.WriteLine("Success");
 Console.ReadLine();
@@ -23,9 +22,7 @@ void FillPerson()
         Birthplace ="Maarsbergen",
         Birthdate = new DateTime(1968,1,12),
         Sex = Common.Models.Sex.Male,
-        IsRuler =true,
-        Occupation = database.Occupations.First()
-
+        IsRuler =true
     });
     database.SaveChanges();
 }

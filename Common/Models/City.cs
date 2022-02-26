@@ -10,6 +10,10 @@ namespace Common.Models
         public string Name { get; set; }
         public virtual Person? CityRuler { get; set; }
         public int Population { get; set; }
-        public virtual ICollection<District>? Districts { get; set; }
+
+        public int? NationId { get; set; }
+
+        public int? RegionId { get; set; }
+        public ICollection<District>? Districts { get; set; }
     }
 }

@@ -10,6 +10,21 @@ namespace Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Nations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Population = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Nations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Occupations",
                 columns: table => new
                 {
@@ -23,26 +38,21 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Persons",
+                name: "Regions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Birthplace = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Birthdate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Sex = table.Column<int>(type: "int", nullable: false),
-                    IsRuler = table.Column<bool>(type: "bit", nullable: false),
-                    OccupationId = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persons", x => x.Id);
+                    table.PrimaryKey("PK_Regions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Persons_Occupations_OccupationId",
-                        column: x => x.OccupationId,
-                        principalTable: "Occupations",
+                        name: "FK_Regions_Nations_NationId",
+                        column: x => x.NationId,
+                        principalTable: "Nations",
                         principalColumn: "Id");
                 });
 
@@ -53,16 +63,22 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityRulerId = table.Column<int>(type: "int", nullable: true),
-                    Population = table.Column<int>(type: "int", nullable: false)
+                    Population = table.Column<int>(type: "int", nullable: false),
+                    NationId = table.Column<int>(type: "int", nullable: true),
+                    RegionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cities_Persons_CityRulerId",
-                        column: x => x.CityRulerId,
-                        principalTable: "Persons",
+                        name: "FK_Cities_Nations_NationId",
+                        column: x => x.NationId,
+                        principalTable: "Nations",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Cities_Regions_RegionId",
+                        column: x => x.RegionId,
+                        principalTable: "Regions",
                         principalColumn: "Id");
                 });
 
@@ -86,61 +102,54 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Nations",
+                name: "Persons",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    NationCapitalId = table.Column<int>(type: "int", nullable: true),
-                    Population = table.Column<int>(type: "int", nullable: false),
-                    NationRulerId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Nations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Nations_Cities_NationCapitalId",
-                        column: x => x.NationCapitalId,
-                        principalTable: "Cities",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Nations_Persons_NationRulerId",
-                        column: x => x.NationRulerId,
-                        principalTable: "Persons",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Regions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RegionCapitalId = table.Column<int>(type: "int", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Birthplace = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Birthdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Sex = table.Column<int>(type: "int", nullable: false),
+                    IsRuler = table.Column<bool>(type: "bit", nullable: false),
+                    OccupationId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
                     NationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Regions", x => x.Id);
+                    table.PrimaryKey("PK_Persons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Regions_Cities_RegionCapitalId",
-                        column: x => x.RegionCapitalId,
+                        name: "FK_Persons_Cities_CityId",
+                        column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Regions_Nations_NationId",
+                        name: "FK_Persons_Nations_NationId",
                         column: x => x.NationId,
                         principalTable: "Nations",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Persons_Occupations_OccupationId",
+                        column: x => x.OccupationId,
+                        principalTable: "Occupations",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_CityRulerId",
+                name: "IX_Cities_NationId",
                 table: "Cities",
-                column: "CityRulerId");
+                column: "NationId",
+                unique: true,
+                filter: "[NationId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_RegionId",
+                table: "Cities",
+                column: "RegionId",
+                unique: true,
+                filter: "[RegionId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Districts_CityId",
@@ -148,14 +157,18 @@ namespace Data.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Nations_NationCapitalId",
-                table: "Nations",
-                column: "NationCapitalId");
+                name: "IX_Persons_CityId",
+                table: "Persons",
+                column: "CityId",
+                unique: true,
+                filter: "[CityId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Nations_NationRulerId",
-                table: "Nations",
-                column: "NationRulerId");
+                name: "IX_Persons_NationId",
+                table: "Persons",
+                column: "NationId",
+                unique: true,
+                filter: "[NationId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Persons_OccupationId",
@@ -166,11 +179,6 @@ namespace Data.Migrations
                 name: "IX_Regions_NationId",
                 table: "Regions",
                 column: "NationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Regions_RegionCapitalId",
-                table: "Regions",
-                column: "RegionCapitalId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -179,19 +187,19 @@ namespace Data.Migrations
                 name: "Districts");
 
             migrationBuilder.DropTable(
-                name: "Regions");
-
-            migrationBuilder.DropTable(
-                name: "Nations");
+                name: "Persons");
 
             migrationBuilder.DropTable(
                 name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Persons");
+                name: "Occupations");
 
             migrationBuilder.DropTable(
-                name: "Occupations");
+                name: "Regions");
+
+            migrationBuilder.DropTable(
+                name: "Nations");
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Data
         public DbSet<Region> Regions { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=PERENCAKE\\SQLEXPRESS;Database=21-2;user id=sa;password=123;");
+            optionsBuilder.UseSqlServer("Server=192.168.2.10\\SQLEXPRESS;Database=21-2;user id=sa;password=123;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

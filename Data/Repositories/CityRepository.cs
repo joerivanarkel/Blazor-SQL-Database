@@ -12,12 +12,12 @@ namespace Data.Repositories
 
         public override void Create(City city)
         {
-            var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == city.Person.FirstName );
+            var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == city.CityRuler.FirstName );
             if (existingPerson != null)
             {
                 var attachedPerson = database.Entry(existingPerson);
-                attachedPerson.CurrentValues.SetValues(city.Person);
-                city.Person = attachedPerson.Entity;
+                attachedPerson.CurrentValues.SetValues(city.CityRuler);
+                city.CityRuler = attachedPerson.Entity;
             }
             database.Cities.Add(city);
             database.SaveChanges();
