@@ -2,6 +2,7 @@ using Business;
 using Data;
 using Data.Repositories;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -28,8 +29,6 @@ builder.Services.AddTransient<INationService, NationService>();
 builder.Services.AddTransient<IOccupationService, OccupationService>();
 builder.Services.AddTransient<IPersonService, PersonService>();
 builder.Services.AddTransient<IRegionService, RegionService>();
-
-
 
 var app = builder.Build();
 

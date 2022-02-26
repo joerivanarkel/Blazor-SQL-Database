@@ -8,6 +8,7 @@
 @inject IDistrictServiceUI DistrictServiceUI
 @inject IPersonServiceUI PersonServiceUI
 @inject NavigationManager NavigationManager
+@inject NotificationService NotificationService
 
 <h1>Create City</h1>
 
@@ -43,6 +44,8 @@ else
         </div>
   </div>
     </EditForm>
+    <h2>Radzen test</h2>
+    <RadzenButton Click="@RadzenButtonClick" Text="Click this button"></RadzenButton>
 }
 
 @code
@@ -65,5 +68,15 @@ else
         city.CityRuler = SelectedPerson();
         CityServiceUI.CreateCityAsync(city);
         NavigationManager.NavigateTo("/city");
+    }
+
+    private void RadzenButtonClick()
+    {
+        var message = new NotificationMessage();
+        message.Severity = NotificationSeverity.Info;
+        message.Summary = "Huh does it work?";
+        message.Detail = "What the fuck detail";
+        message.Duration = 4000;
+        NotificationService.Notify(message);
     }
 }
