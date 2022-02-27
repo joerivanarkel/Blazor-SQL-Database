@@ -5,6 +5,7 @@
 @using Blazor.Data
 @using Data.Models
 @inject IPersonServiceUI PersonServiceUI
+@inject NavigationManager NavManager
 
 <h1>Person Table</h1>
 
@@ -14,43 +15,43 @@
 }
 else
 {
-    if(persons.Count() == 0)
+    if (persons.Count() == 0)
     {
         <p><em>No persons found</em></p>
     }
-    else{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Sex</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var person in persons)
-            {
-                <tr>
-                    <td>@person.firstName</td>
-                    <td>@person.lastName</td>
-                    <td>@person.birthplace</td>
-                    <td>@person.birthdate</td>
-                    <td>@person.Sex</td>
-                    <td>@person.IsRuler</td>
-                    @if(person.Occupation != null)
-                    {
-                        <td>@person.Occupation</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
-    }
+    else
+    {
+        <RadzenDataGrid Data="@persons" TItem="Person" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="Person" Property="firstName" Title="First Name" />
+                <RadzenDataGridColumn TItem="Person" Property="lastName" Title="Last Name" />
+                <RadzenDataGridColumn TItem="Person" Property="birthplace" Title="Birthplace" />
+                <RadzenDataGridColumn TItem="Person" Property="birthdate" Title="Birthdate" />
+                <RadzenDataGridColumn TItem="Person" Property="Sex" Title="Sex" />
 
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Create" Sortable="false" Filterable="false">
+                    <Template Context="data">
+                        <RadzenButton ButtonStyle="ButtonStyle.Success" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/createperson")) Text="Create" />
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                    <Template Context="data">
+                        <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/editperson")) Text="Edit" />
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                    <Template Context="data">
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/deleteperson")) Text="Delete" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
 }
 
 @code {

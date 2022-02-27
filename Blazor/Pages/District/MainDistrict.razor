@@ -5,6 +5,7 @@
 @using Blazor.Data
 @using Data.Models
 @inject IDistrictServiceUI DistrictServiceUI
+@inject NavigationManager NavManager
 
 <h1>District Table</h1>
 
@@ -19,23 +20,33 @@ else
         <p><em>No persons found</em></p>
     }
     else{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var district in districts)
-            {
-                <tr>
-                    <td>@district.Name</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    }
+    <RadzenDataGrid Data="@districts" TItem="District" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="District" Property="Name" Title="Name" />
 
+            <RadzenDataGridColumn TItem="District" Width="160px" Title="Create" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Success" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/createdistrict")) Text="Create" />
+                </Template>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="District" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/editdistrict")) Text="Edit" />
+                </Template>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="District" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/deletedistrict")) Text="Delete" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+    }
 }
 
 @code {

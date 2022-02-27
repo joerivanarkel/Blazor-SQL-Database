@@ -1,0 +1,83 @@
+﻿@page "/region"
+
+<PageTitle>Region Table</PageTitle>
+
+@using Blazor.Data
+@using Blazor.Data.Models
+@inject IRegionServiceUI RegionServiceUI
+@inject NavigationManager NavManager
+
+<h1>Region Table</h1>
+
+@if (regions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if(regions.Count() == 0)
+    {
+        <p><em>No persons found</em></p>
+    }
+    else{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Region Capital</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var region in regions)
+            {
+                <tr>
+                    <td>@region.Name</td>
+                    @if(region.RegionCapital != null)
+                    {
+                        <td>@region.RegionCapital.Name</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+    <RadzenDataGrid Data="@regions" TItem="Region" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="Region" Property="Name" Title="Name" />
+
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Create" Sortable="false" Filterable="false">
+                    <Template Context="data">
+                        <RadzenButton ButtonStyle="ButtonStyle.Success" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/createregion")) Text="Create" />
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                    <Template Context="data">
+                        <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/editregion")) Text="Edit" />
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                    <Template Context="data">
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/deleteregion")) Text="Delete" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+}
+
+@code {
+    private IEnumerable<Data.Models.Region>? regions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        regions = await RegionServiceUI.GetAsync();
+    }
+}

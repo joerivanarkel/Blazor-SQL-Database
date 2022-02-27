@@ -5,6 +5,7 @@
 @using Blazor.Data
 @using Data.Models
 @inject IOccupationServiceUI OccupationServiceUI
+@inject NavigationManager NavManager
 
 <h1>Occupation Table</h1>
 
@@ -18,24 +19,50 @@ else
     {
         <p><em>No persons found</em></p>
     }
-    else{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var occupation in occupations)
-            {
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@occupation.Name</td>
+                    <th>Name</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var occupation in occupations)
+                {
+                    <tr>
+                        <td>@occupation.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
+    <RadzenDataGrid Data="@occupations" TItem="Occupation" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="Occupation" Property="Name" Title="Name" />
 
+            <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Create" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Success" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/createoccupation")) Text="Create" />
+                </Template>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/editoccupation")) Text="Edit" />
+                </Template>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/deleteoccupation")) Text="Delete" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
 }
 
 @code {

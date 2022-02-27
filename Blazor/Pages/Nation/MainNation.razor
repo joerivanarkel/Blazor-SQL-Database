@@ -5,6 +5,7 @@
 @using Blazor.Data
 @using Data.Models
 @inject INationServiceUI NationServiceUI
+@inject NavigationManager NavManager
 
 <h1>Nation Table</h1>
 
@@ -19,52 +20,37 @@ else
         <p><em>No persons found</em></p>
     }
     else{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Population</th>
-                <th>Capital</th>
-                <th>Ruler</th>
-                <th>Regions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var nation in nations)
-            {
-                <tr>
-                    <td>@nation.Name</td>
-                    <td>@nation.Type</td>
-                    <td>@nation.Population</td>
-                    @if(nation.NationCapital != null)
-                    {
-                        <td>@nation.NationCapital</td>
-                    }
-                    else
-                    {
-                        <td> </td>
-                    }
-                    @if(nation.NationRuler != null)
-                    {
-                        <td>@nation.NationRuler</td>
-                    }
-                    else
-                    {
-                        <td> </td>
-                    }
-                    @if(nation.Regions != null)
-                    {
-                        <td>@nation.Regions</td>
-                    }
-                    else
-                    {
-                        <td> </td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
+
+    <RadzenDataGrid Data="@nations" TItem="Nation" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="Nation" Property="Name" Title="Name" />
+            <RadzenDataGridColumn TItem="Nation" Property="Type" Title="Type" />
+            <RadzenDataGridColumn TItem="Nation" Property="NationCapital.Name" Title="Capital" />
+            <RadzenDataGridColumn TItem="Nation" Property="Population" Title="Population" />
+            <RadzenDataGridColumn TItem="Nation" Property="NationsRuler.firstName" Title="Ruler" />
+
+            <RadzenDataGridColumn TItem="Nation" Width="160px" Title="Create" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Success" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/createnation")) Text="Create" />
+                </Template>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="Nation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/editnation")) Text="Edit" />
+                </Template>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="Nation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/deletenation")) Text="Delete" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
     }
 
 }
