@@ -4,11 +4,55 @@
 
 @using Blazor.Data
 @using Data.Models
+@inject INationServiceUI NationServiceUI
 @inject ICityServiceUI CityServiceUI
+@inject IPersonServiceUI PersonServiceUI
+@inject NavigationManager NavigationManager
 
-<h1>Create City</h1>
+<h1>Create Nation</h1>
+
+@if (nation == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenTemplateForm Data="@nation" Submit="@((Nation nation) => { Create(nation); })">
+        <div class="row">
+            <div class="col-md-3">
+                <RadzenFieldset Text="Enter details">
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Name" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox @bind-Value="nation.Name" style="width: 100%;" Name="Name" />
+                        </div>
+                    </div>
+                </RadzenFieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+}
 
 @code
 {
+    private Nation nation = new Nation();
 
+    private IEnumerable<Nation>? nations;
+
+    protected override async Task OnInitializedAsync()
+    {
+        nations = await NationServiceUI.GetAsync();
+    }
+    private void Create(Nation nation)
+    {
+        NationServiceUI.CreateAsync(nation);
+        NavigationManager.NavigateTo("/nation");
+    }
 }

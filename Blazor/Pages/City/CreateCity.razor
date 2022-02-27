@@ -8,96 +8,76 @@
 @inject IDistrictServiceUI DistrictServiceUI
 @inject IPersonServiceUI PersonServiceUI
 @inject NavigationManager NavigationManager
-@inject NotificationService NotificationService
 
 <h1>Create City</h1>
 
-@if (persons == null)
+@if (cities == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <EditForm Model=@city OnSubmit="Create">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-auto">
-                    <label for="NameInput" class="form-label">Name:</label>
-                    <input @bind="city.Name" type="text" id="NameInput" name="CityName" class="form-control"><br>
-
-                    <label for="PopInput" class="form-label">Population:</label>
-                    <input @bind="city.Population" type="int" id="PopInput" name="CityPop" class="form-control"><br>
-
-                    <label for="PopInput" class="form-label">Ruler:</label>
-                    <datalist id="PersonInputList">
-                        @foreach (var person in persons)
-                        {
-                            var fullname = person.firstName + " " + person.lastName;
-                            <option value=@person.firstName label="@fullname"></option>
-                        }
-                    </datalist>
-                    <input list="PersonInputList" class="form-control"
-                    @onchange="@((args) => name = args.Value.ToString())">
-
-                    <br>
-                    <input type="submit" value="Submit" class="btn btn-primary" />
-                </div>
-            </div>
-        </div>
-    </EditForm>
-
-    @* <RadzenTemplateForm 
-        Data="@city" 
-        Submit="Create">
+    <RadzenTemplateForm Data="@city" Submit="@((City city) => { Create(city); })">
         <div class="row">
-            <div class="col-md-6">
-                <RadzenFieldset Text="Purchase Info">
-                    <div class="row">
+            <div class="col-md-3">
+                <RadzenFieldset Text="Enter details">
+                    <div style="margin-bottom: 1rem;" class="row">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Name" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenTextBox style="width: 100%;" Name="Name" />
+                            <RadzenTextBox @bind-Value="city.Name" style="width: 100%;" Name="Name" />
                         </div>
                     </div>
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Population" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenNumeric style="width: 100%;" Name="Population" @bind-Value="city.Population" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Credit Card" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="city.CityRuler" AllowClear="true" Placeholder="Select something"
+                            Data="@persons" style="width: 100%;" TextProperty="firstName" ValueProperty="city.CityRuler"
+                            Name="CityRuler">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+
+                    @* Insert District Select *@
                 </RadzenFieldset>
             </div>
         </div>
-    </RadzenTemplateForm> *@
-
-    <h2>Radzen test</h2>
-    <RadzenButton Click="@RadzenButtonClick" Text="Click this button"></RadzenButton>
+        <div class="row">
+            <div class="col-md-4" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
 }
 
 @code
 {
     private City city = new City();
-    private string name;
 
-    private Person SelectedPerson() =>
-    persons.FirstOrDefault(x => x.firstName == name);
     private IEnumerable<District>? districts;
     private IEnumerable<Person>? persons;
+    private IEnumerable<City> cities;
 
     protected override async Task OnInitializedAsync()
     {
         districts = await DistrictServiceUI.GetAsync();
         persons = await PersonServiceUI.GetAsync();
+        cities = await CityServiceUI.GetCitiesAsync();
     }
-    private void Create()
+    private void Create(City city)
     {
-        city.CityRuler = SelectedPerson();
         CityServiceUI.CreateAsync(city);
         NavigationManager.NavigateTo("/city");
-    }
-
-    private void RadzenButtonClick()
-    {
-        var message = new NotificationMessage();
-        message.Severity = NotificationSeverity.Info;
-        message.Summary = "Huh does it work?";
-        message.Detail = "What the fuck detail";
-        message.Duration = 4000;
-        NotificationService.Notify(message);
     }
 }

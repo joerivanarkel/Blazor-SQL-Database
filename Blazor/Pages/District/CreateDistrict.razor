@@ -4,11 +4,53 @@
 
 @using Blazor.Data
 @using Data.Models
-@inject ICityServiceUI CityServiceUI
+@inject IDistrictServiceUI DistrictServiceUI
+@inject NavigationManager NavigationManager
 
 <h1>Create District</h1>
 
+@if (districts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenTemplateForm Data="@district" Submit="@((District district) => { Create(district); })">
+        <div class="row">
+            <div class="col-md-3">
+                <RadzenFieldset Text="Enter details">
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Name" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox @bind-Value="district.Name" style="width: 100%;" Name="Name" />
+                        </div>
+                    </div>
+                </RadzenFieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+}
+
 @code
 {
+    private District district = new District();
 
+    private IEnumerable<District>? districts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        districts = await DistrictServiceUI.GetAsync();
+    }
+    private void Create(District district)
+    {
+        DistrictServiceUI.CreateAsync(district);
+        NavigationManager.NavigateTo("/district");
+    }
 }
