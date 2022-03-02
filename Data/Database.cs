@@ -14,10 +14,11 @@ namespace Data
         public DbSet<Person> Persons { get; set; }
         public DbSet<Region> Regions { get; set; }
 
-        DatabaseConfig _config = GetConfig();
+        private DatabaseConfig _config = GetConfig();
         static DatabaseConfig GetConfig()
         {
             var config = new ConfigurationBuilder()
+                .SetBasePath(Path.GetDirectoryName(System.AppContext.BaseDirectory))
                 .AddJsonFile("connectionstring.json")
                 .AddEnvironmentVariables()
                 .Build();
