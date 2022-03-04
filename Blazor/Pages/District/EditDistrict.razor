@@ -1,22 +1,22 @@
-﻿@page "/updateoccupation"
+﻿@page "/editdistrict/{id}"
 
-<PageTitle>Update Occupationy</PageTitle>
+<PageTitle>Edit District</PageTitle>
 
 @using Blazor.Data
 @using Data.Models
-@inject IOccupationServiceUI OccupationServiceUI
+@inject IDistrictServiceUI DistrictServiceUI
 @inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.WebUtilities
 
-<h1>Update Occupation</h1>
+<h1>Edit District</h1>
 
-@if (occupations == null)
+@if (districts == null)
 {
         <p><em>Loading...</em></p>
 }
 else
 {
-        <RadzenTemplateForm Data="@occupation" Submit="@((Occupation occupation) => { Create(occupation); })">
+        <RadzenTemplateForm Data="@district" Submit="@((District district) => { Update(district); })">
             <div class="row">
                 <div class="col-md-3">
                     <RadzenFieldset Text="Enter details">
@@ -25,7 +25,7 @@ else
                                 <RadzenLabel Text="Name" />
                             </div>
                             <div class="col-md-8">
-                                <RadzenTextBox @bind-Value="occupation.Name" style="width: 100%;" Name="Name" />
+                                <RadzenTextBox @bind-Value="district.Name" style="width: 100%;" Name="Name" />
                             </div>
                         </div>
                     </RadzenFieldset>
@@ -41,24 +41,23 @@ else
 
 @code
 {
-    private Occupation occupation = new Occupation();
-    private IEnumerable<Occupation>? occupations;
-    private int _foundId;
+    [Parameter]
+    public string id { get; set; }
+    private District district = new District();
+    private int _parsedId;
+    
+    private IEnumerable<District>? districts;
 
     protected override async Task OnInitializedAsync()
     {
-        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var _id))
-        {
-            _foundId = Convert.ToInt32(_id);
-        }
-        occupations = await OccupationServiceUI.GetAsync();
+        _parsedId = int.Parse(id);
+        district = await DistrictServiceUI.GetByIdAsync(_parsedId);
+        districts = await DistrictServiceUI.GetAsync();
     }
-
-    private void Create(Occupation occupation)
+    private void Update(District district)
     {
-        occupation.Id = _foundId;
-        OccupationServiceUI.UpdateAsync(occupation);
-        NavigationManager.NavigateTo("/occupation");
+        district.Id = _parsedId;
+        DistrictServiceUI.UpdateAsync(district);
+        NavigationManager.NavigateTo("/district");
     }
 }

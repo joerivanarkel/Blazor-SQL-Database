@@ -32,16 +32,14 @@ else
             <RadzenDataGridColumn TItem="Nation" Property="NationsRuler.firstName" Title="Ruler" />
 
             <RadzenDataGridColumn TItem="Nation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/updatenation")) Text="Edit" />
+                <Template Context="nation">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() => EditClick(nation)) Text="Edit" />
                 </Template>
             </RadzenDataGridColumn>
 
             <RadzenDataGridColumn TItem="Nation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/deletenation")) Text="Delete" />
+                <Template Context="nation">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() => Delete(nation)) Text="Delete" />
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
@@ -52,9 +50,22 @@ else
 
 @code {
     private IEnumerable<Data.Models.Nation>? nations;
+    private IList<Nation> nation = new List<Nation>();
+
+    private void EditClick(Nation nation)
+    {
+        var uri = "editnation/" + nation.Id;
+        NavManager.NavigateTo(uri);
+    }
+    private void Delete(Nation nation)
+    {
+        var uri = "deletenation/" + nation.Id;
+        NavManager.NavigateTo(uri);
+    }
 
     protected override async Task OnInitializedAsync()
     {
         nations = await NationServiceUI.GetAsync();
+        nation.Add(nations.First());
     }
 }

@@ -32,16 +32,14 @@ else
                 <RadzenDataGridColumn TItem="Person" Property="Sex" Title="Sex" />
 
                 <RadzenDataGridColumn TItem="Person" Width="160px" Title="Edit" Sortable="false" Filterable="false">
-                    <Template Context="data">
-                        <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/updateperson")) Text="Edit" />
+                    <Template Context="person">
+                        <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() => EditClick(person)) Text="Edit" />
                     </Template>
                 </RadzenDataGridColumn>
 
                 <RadzenDataGridColumn TItem="Person" Width="160px" Title="Delete" Sortable="false" Filterable="false">
-                    <Template Context="data">
-                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/deleteperson")) Text="Delete" />
+                    <Template Context="person">
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() => Delete(person)) Text="Delete" />
                     </Template>
                 </RadzenDataGridColumn>
             </Columns>
@@ -51,9 +49,22 @@ else
 
 @code {
     private IEnumerable<Person>? persons;
+    private IList<Person> person = new List<Person>();
+
+    private void EditClick(Person person)
+    {
+        var uri = "editperson/" + person.Id;
+        NavManager.NavigateTo(uri);
+    }
+    private void Delete(Person person)
+    {
+        var uri = "deleteperson/" + person.Id;
+        NavManager.NavigateTo(uri);
+    }
 
     protected override async Task OnInitializedAsync()
     {
         persons = await PersonServiceUI.GetAsync();
+        person.Add(person.First());
     }
 }

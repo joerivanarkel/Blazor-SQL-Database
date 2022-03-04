@@ -17,7 +17,7 @@ namespace Blazor.Data
             await _httpClient.GetFromJsonAsync<IEnumerable<District>>("District");
 
         public async Task<District> GetByIdAsync(int id) =>
-            await _httpClient.GetFromJsonAsync<District>("GetDistrict");
+            await _httpClient.GetFromJsonAsync<District>($"District/{id}");
 
         public async Task CreateAsync(District district) =>
             await _httpClient.PostAsJsonAsync<District>("District", district);

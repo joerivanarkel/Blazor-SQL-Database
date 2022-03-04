@@ -17,7 +17,7 @@ namespace Blazor.Data
             await _httpClient.GetFromJsonAsync<IEnumerable<Nation>>("Nation");
 
         public async Task<Nation> GetByIdAsync(int id) =>
-            await _httpClient.GetFromJsonAsync<Nation>("GetNation");
+            await _httpClient.GetFromJsonAsync<Nation>($"Nation/{id}");
 
         public async Task CreateAsync(Nation nation) =>
             await _httpClient.PostAsJsonAsync<Nation>("Nation", nation);

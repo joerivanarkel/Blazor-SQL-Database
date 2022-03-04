@@ -10,7 +10,7 @@
 @inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.WebUtilities
 
-<h1>Update City</h1>
+<h1>Edit City</h1>
 
 @if (cities == null)
 {
@@ -70,7 +70,6 @@ else
     private IEnumerable<District>? districts;
     private IEnumerable<Person>? persons;
     private IEnumerable<City>? cities;
-    //private int _foundId;
 
     protected override async Task OnInitializedAsync()
     {

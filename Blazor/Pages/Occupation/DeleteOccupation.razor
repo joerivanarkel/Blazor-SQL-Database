@@ -1,11 +1,11 @@
-﻿@page "/deletecity/{id}"
+﻿@page "/deleteoccupation/{id}"
 
 
-<PageTitle>Delete City</PageTitle>
+<PageTitle>Delete Occupation</PageTitle>
 
 @using Blazor.Data
 @using Data.Models
-@inject ICityServiceUI cityServiceUI
+@inject IOccupationServiceUI OccupationServiceUI
 @inject NavigationManager navigationManager
 
 <h1>Are you sure</h1>
@@ -15,17 +15,17 @@
 @code
 {
     [Parameter]
-    public  string id { get; set; }
+    public string id { get; set; }
 
     private async void Delete()
     {
         var parsedId = int.Parse(id);
-        await cityServiceUI.DeleteAsync(parsedId);
+        await OccupationServiceUI.DeleteAsync(parsedId);
         GoBack();
     }
 
     private void GoBack()
     {
-        navigationManager.NavigateTo("/city");
+        navigationManager.NavigateTo("/occupation");
     }
 }

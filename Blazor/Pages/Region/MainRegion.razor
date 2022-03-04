@@ -27,17 +27,15 @@ else
         <Columns>
             <RadzenDataGridColumn TItem="Region" Property="Name" Title="Name" />
 
-            <RadzenDataGridColumn TItem="Person" Width="160px" Title="Edit" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/updateregion")) Text="Edit" />
+            <RadzenDataGridColumn TItem="Region" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                <Template Context="region">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() => EditClick(region)) Text="Edit" />
                 </Template>
             </RadzenDataGridColumn>
 
-            <RadzenDataGridColumn TItem="Person" Width="160px" Title="Delete" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/deleteregion")) Text="Delete" />
+            <RadzenDataGridColumn TItem="Region" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                <Template Context="region">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() => Delete(region)) Text="Delete" />
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
@@ -47,9 +45,22 @@ else
 
 @code {
     private IEnumerable<Data.Models.Region>? regions;
+    private IList<Region> region = new List<Region>();
+
+    private void EditClick(Region region)
+    {
+        var uri = "editregion/" + region.Id;
+        NavManager.NavigateTo(uri);
+    }
+    private void Delete(Region region)
+    {
+        var uri = "deleteregion/" + region.Id;
+        NavManager.NavigateTo(uri);
+    }
 
     protected override async Task OnInitializedAsync()
     {
         regions = await RegionServiceUI.GetAsync();
+        region.Add(region.First());
     }
 }
