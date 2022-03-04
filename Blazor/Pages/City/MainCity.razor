@@ -17,21 +17,20 @@
 }
 else
 {
-    <RadzenDataGrid Data="@cities" TItem="City" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+    <RadzenDataGrid Data="@cities" TItem="City" AllowPaging="true" AllowSorting="true" AllowFiltering="true" @bind-Value=@city >
         <Columns>
             <RadzenDataGridColumn TItem="City" Property="Name" Title="Name" />
             <RadzenDataGridColumn TItem="City" Property="Population" Title="Population" />
 
             <RadzenDataGridColumn TItem="City" Width="160px" Title="Edit" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/updatecity?id=@City.Id")) Text="Edit" />
+                <Template Context="city">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() => EditClick(city)) Text="Edit" />
                 </Template>
             </RadzenDataGridColumn>
 
             <RadzenDataGridColumn TItem="City" Width="160px" Title="Delete" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(args => Delete(args)) Text="Delete" />
+                <Template Context="city">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Text="Delete" />
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
@@ -41,14 +40,17 @@ else
 
 @code {
     private IEnumerable<City>? cities;
+    private IList<City> city = new List<City>();        
 
-    private void Delete(object a)
+    private void EditClick(City city)
     {
-        //CityServiceUI.DeleteAsync();
+        var uri = "editcity/" + city.Id;
+        NavManager.NavigateTo(uri);
     }
 
     protected override async Task OnInitializedAsync()
     {
         cities = await CityServiceUI.GetCitiesAsync();
+        city.Add(cities.First());
     }
 }
