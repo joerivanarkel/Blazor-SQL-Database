@@ -28,7 +28,14 @@ namespace API.Controllers
         [HttpPost]
         public void Create( [FromBody]  City city)
         {
-            _cityService.Create(city);
+            if (city.IsValid())
+            {
+                _cityService.Create(city);
+            }
+            else
+            {
+                // Http response message
+            }
         }
 
         [HttpDelete("{id}")]

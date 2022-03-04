@@ -8,6 +8,8 @@
 @inject NavigationManager NavManager
 
 <h1>Occupation Table</h1>
+<RadzenButton Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click=@(() =>
+    NavManager.NavigateTo("/createoccupation")) Text="Create New" />
 
 @if (occupations == null)
 {
@@ -21,48 +23,27 @@ else
     }
     else
     {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var occupation in occupations)
-                {
-                    <tr>
-                        <td>@occupation.Name</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    <RadzenDataGrid Data="@occupations" TItem="Occupation" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
-        <Columns>
-            <RadzenDataGridColumn TItem="Occupation" Property="Name" Title="Name" />
+        <RadzenDataGrid Data="@occupations" TItem="Occupation" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="Occupation" Property="Name" Title="Name" />
 
-            <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Create" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Success" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/createoccupation")) Text="Create" />
-                </Template>
-            </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                    <Template Context="data">
+                        <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
+                    NavManager.NavigateTo("/updateoccupation")) Text="Edit" />
+                    </Template>
+                </RadzenDataGridColumn>
 
-            <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/editoccupation")) Text="Edit" />
-                </Template>
-            </RadzenDataGridColumn>
-
-            <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                    <Template Context="data">
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
                     NavManager.NavigateTo("/deleteoccupation")) Text="Delete" />
-                </Template>
-            </RadzenDataGridColumn>
-        </Columns>
-    </RadzenDataGrid>
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
+
 }
 
 @code {

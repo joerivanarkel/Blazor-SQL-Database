@@ -22,24 +22,16 @@ else
             <RadzenDataGridColumn TItem="City" Property="Name" Title="Name" />
             <RadzenDataGridColumn TItem="City" Property="Population" Title="Population" />
 
-            <RadzenDataGridColumn TItem="City" Width="160px" Title="Create" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Success" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/createcity")) Text="Create" />
-                </Template>
-            </RadzenDataGridColumn>
-
             <RadzenDataGridColumn TItem="City" Width="160px" Title="Edit" Sortable="false" Filterable="false">
                 <Template Context="data">
                     <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/editcity")) Text="Edit" />
+                    NavManager.NavigateTo("/updatecity?id=@City.Id")) Text="Edit" />
                 </Template>
             </RadzenDataGridColumn>
 
             <RadzenDataGridColumn TItem="City" Width="160px" Title="Delete" Sortable="false" Filterable="false">
                 <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/deletecity")) Text="Delete" />
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(args => Delete(args)) Text="Delete" />
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
@@ -50,9 +42,9 @@ else
 @code {
     private IEnumerable<City>? cities;
 
-    private void Navigate()
+    private void Delete(object a)
     {
-
+        //CityServiceUI.DeleteAsync();
     }
 
     protected override async Task OnInitializedAsync()

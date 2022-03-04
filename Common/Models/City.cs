@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Common.Models
 {
     public class City : Entity
@@ -15,5 +10,19 @@ namespace Common.Models
 
         public int? RegionId { get; set; }
         public ICollection<District>? Districts { get; set; }
+        
+        public override bool IsValid()
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                return false;
+            }
+            if (Population > 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

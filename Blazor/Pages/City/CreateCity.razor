@@ -37,7 +37,7 @@ else
                             <RadzenNumeric style="width: 100%;" Name="Population" @bind-Value="city.Population" />
                         </div>
                     </div>
-                    <div class="row">
+                    <div style="margin-bottom: 1rem;" class="row">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Credit Card" />
                         </div>
@@ -48,8 +48,6 @@ else
                             </RadzenDropDown>
                         </div>
                     </div>
-
-                    @* Insert District Select *@
                 </RadzenFieldset>
             </div>
         </div>
@@ -67,7 +65,8 @@ else
 
     private IEnumerable<District>? districts;
     private IEnumerable<Person>? persons;
-    private IEnumerable<City> cities;
+    private IEnumerable<City>? cities;
+    private int _foundId;
 
     protected override async Task OnInitializedAsync()
     {

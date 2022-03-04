@@ -29,6 +29,48 @@ else
                             <RadzenTextBox @bind-Value="nation.Name" style="width: 100%;" Name="Name" />
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Government Type" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="nation.Type" style="width: 100%;" TextProperty="Type"
+                            ValueProperty="Type" Name="Type">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Capital" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="nation.NationCapital" AllowClear="true"
+                            Placeholder="Select something" Data="@cities" style="width: 100%;" TextProperty="Name"
+                            ValueProperty="nation.NationCapital" Name="NationCapital">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Ruler" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="nation.NationRuler" AllowClear="true"
+                            Placeholder="Select something" Data="@persons" style="width: 100%;" TextProperty="firstName"
+                            ValueProperty="nation.NationRuler" Name="NationRuler">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Population" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenNumeric style="width: 100%;" Name="Population" @bind-Value="nation.Population" />
+                        </div>
+                    </div>
+
+                    @* Regions select *@
                 </RadzenFieldset>
             </div>
         </div>
@@ -45,10 +87,14 @@ else
     private Nation nation = new Nation();
 
     private IEnumerable<Nation>? nations;
+    private IEnumerable<City>? cities;
+    private IEnumerable<Person>? persons;
 
     protected override async Task OnInitializedAsync()
     {
         nations = await NationServiceUI.GetAsync();
+        cities = await CityServiceUI.GetCitiesAsync();
+        persons = await PersonServiceUI.GetAsync();
     }
     private void Create(Nation nation)
     {

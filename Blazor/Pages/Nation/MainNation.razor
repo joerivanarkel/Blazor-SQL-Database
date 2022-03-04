@@ -8,6 +8,8 @@
 @inject NavigationManager NavManager
 
 <h1>Nation Table</h1>
+<RadzenButton Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click=@(() =>
+    NavManager.NavigateTo("/createnation")) Text="Create New" />
 
 @if (nations == null)
 {
@@ -29,17 +31,10 @@ else
             <RadzenDataGridColumn TItem="Nation" Property="Population" Title="Population" />
             <RadzenDataGridColumn TItem="Nation" Property="NationsRuler.firstName" Title="Ruler" />
 
-            <RadzenDataGridColumn TItem="Nation" Width="160px" Title="Create" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Success" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/createnation")) Text="Create" />
-                </Template>
-            </RadzenDataGridColumn>
-
             <RadzenDataGridColumn TItem="Nation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
                 <Template Context="data">
                     <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/editnation")) Text="Edit" />
+                    NavManager.NavigateTo("/updatenation")) Text="Edit" />
                 </Template>
             </RadzenDataGridColumn>
 

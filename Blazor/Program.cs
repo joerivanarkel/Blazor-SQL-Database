@@ -8,7 +8,7 @@ using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
- MyConfig _myConfig = GetConfig();
+MyConfig _myConfig = GetConfig();
 MyConfig GetConfig()
 {
     var config = new ConfigurationBuilder()

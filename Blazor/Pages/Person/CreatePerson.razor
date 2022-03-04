@@ -4,11 +4,99 @@
 
 @using Blazor.Data
 @using Data.Models
-@inject ICityServiceUI CityServiceUI
+@inject IOccupationServiceUI OccupationServiceUI
+@inject IPersonServiceUI PersonServiceUI
+@inject NavigationManager NavigationManager
 
 <h1>Create Person</h1>
 
+@if (person == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenTemplateForm Data="@person" Submit="@((Person person) => { Create(person); })">
+        <div class="row">
+            <div class="col-md-3">
+                <RadzenFieldset Text="Enter details">
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="First Name" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox @bind-Value="person.firstName" style="width: 100%;" Name="FirstName" />
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Last Name" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox @bind-Value="person.lastName" style="width: 100%;" Name="LastName" />
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Birthplace" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox @bind-Value="person.birthplace" style="width: 100%;" Name="Birthplace" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Occupation" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="person.Occupation" AllowClear="true" Placeholder="Select something"
+                            Data="@occupations" style="width: 100%;" TextProperty="Name"
+                            ValueProperty="person.Occupation" Name="Occupation">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Birth Date" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDatePicker style="width: 100%;" Name="Birthdate" @bind-Value="person.birthdate" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Ruler" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenCheckBox @bind-Value=@person.IsRuler Name="IsRuler" TValue="bool" />
+                        </div>
+                    </div>
+                </RadzenFieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+}
+
 @code
 {
+    private Person person = new Person();
 
+    private IEnumerable<Occupation>? occupations;
+    private IEnumerable<Person>? persons;
+
+    protected override async Task OnInitializedAsync()
+    {
+        occupations = await OccupationServiceUI.GetAsync();
+        persons = await PersonServiceUI.GetAsync();
+    }
+    private void Create(Person person)
+    {
+        PersonServiceUI.CreateAsync(person);
+        NavigationManager.NavigateTo("/person");
+    }
 }

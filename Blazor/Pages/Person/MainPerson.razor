@@ -8,6 +8,8 @@
 @inject NavigationManager NavManager
 
 <h1>Person Table</h1>
+<RadzenButton Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click=@(() =>
+    NavManager.NavigateTo("/createperson")) Text="Create New" />
 
 @if (persons == null)
 {
@@ -29,21 +31,14 @@ else
                 <RadzenDataGridColumn TItem="Person" Property="birthdate" Title="Birthdate" />
                 <RadzenDataGridColumn TItem="Person" Property="Sex" Title="Sex" />
 
-                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Create" Sortable="false" Filterable="false">
-                    <Template Context="data">
-                        <RadzenButton ButtonStyle="ButtonStyle.Success" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/createperson")) Text="Create" />
-                    </Template>
-                </RadzenDataGridColumn>
-
-                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                <RadzenDataGridColumn TItem="Person" Width="160px" Title="Edit" Sortable="false" Filterable="false">
                     <Template Context="data">
                         <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/editperson")) Text="Edit" />
+                    NavManager.NavigateTo("/updateperson")) Text="Edit" />
                     </Template>
                 </RadzenDataGridColumn>
 
-                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                <RadzenDataGridColumn TItem="Person" Width="160px" Title="Delete" Sortable="false" Filterable="false">
                     <Template Context="data">
                         <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
                     NavManager.NavigateTo("/deleteperson")) Text="Delete" />
