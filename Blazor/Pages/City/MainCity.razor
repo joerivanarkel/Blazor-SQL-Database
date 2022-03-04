@@ -30,7 +30,7 @@ else
 
             <RadzenDataGridColumn TItem="City" Width="160px" Title="Delete" Sortable="false" Filterable="false">
                 <Template Context="city">
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Text="Delete" />
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Text="Delete" Click=@(() => Delete(city)) />
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
@@ -45,6 +45,12 @@ else
     private void EditClick(City city)
     {
         var uri = "editcity/" + city.Id;
+        NavManager.NavigateTo(uri);
+    }
+
+    private void Delete(City city)
+    {
+        var uri = "deletecity/" + city.Id;
         NavManager.NavigateTo(uri);
     }
 

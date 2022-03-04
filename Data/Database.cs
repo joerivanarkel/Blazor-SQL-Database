@@ -30,14 +30,15 @@ namespace Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-                modelBuilder.Entity<City>()
-            .HasMany(b => b.Districts)
-            .WithOne();
+            modelBuilder.Entity<City>()
+                .HasMany(b => b.Districts)
+                .WithOne();
 
             modelBuilder.Entity<City>()
-                .HasOne( e => e.CityRuler)
+                .HasOne(e => e.CityRuler)
                 .WithOne()
-                .HasForeignKey<Person>(b => b.CityId); ;
+                .HasForeignKey<Person>(b => b.CityId)
+                .OnDelete(DeleteBehavior.SetNull); 
 
         }
     }

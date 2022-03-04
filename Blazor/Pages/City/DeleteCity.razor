@@ -1,0 +1,36 @@
+﻿@page "/deletecity/{id}"
+
+
+<PageTitle>Edit City</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject ICityServiceUI cityServiceUI
+@inject NavigationManager navigationManager
+
+<h1>Are you sure</h1>
+<RadzenButton Click=@(args => Delete()) Text="Confirm"  ButtonStyle="ButtonStyle.Danger"/>
+<RadzenButton Click=@(args => GoBack()) Text="Cancel"  ButtonStyle="ButtonStyle.Primary"/>
+
+@code
+{
+    [Parameter]
+    public  string id { get; set; }
+
+    private async void Delete()
+    {
+        var parsedId = int.Parse(id);
+        await cityServiceUI.DeleteAsync(parsedId);
+        GoBack();
+    }
+
+    private void GoBack()
+    {
+        navigationManager.NavigateTo("/city");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+}
