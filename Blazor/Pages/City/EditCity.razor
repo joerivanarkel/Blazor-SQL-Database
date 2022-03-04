@@ -1,14 +1,34 @@
-﻿@page "/editcity"
+﻿@page "/editcity/{id}"
+
 
 <PageTitle>Edit City</PageTitle>
 
 @using Blazor.Data
 @using Data.Models
-@inject ICityServiceUI CityServiceUI
+@inject ICityServiceUI cityServiceUI
 
 <h1>Edit City</h1>
+@if (City == null)
+{
+    <p><em>Loading...</em></p>
+    
+}
+else
+{
+    <h2>Edit city</h2>
+    <h1>@City.Name</h1>
+}
 
 @code
 {
+    [Parameter]
+    public  string id { get; set; }
+    public City? City { get; set; }
 
+
+    protected override async Task OnInitializedAsync()
+    {
+        var parsedId = int.Parse(id);
+        City = await cityServiceUI.GetByIdAsync(parsedId);
+    }
 }

@@ -14,19 +14,18 @@ namespace Data
         public DbSet<Person> Persons { get; set; }
         public DbSet<Region> Regions { get; set; }
 
-        private DatabaseConfig _config = GetConfig();
-        static DatabaseConfig GetConfig()
+        private string GetConfig()
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Path.GetDirectoryName(System.AppContext.BaseDirectory))
-                .AddJsonFile("connectionstring.json")
+                .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
                 .Build();
-            return config.GetSection("myConfig").Get<DatabaseConfig>();
+            return config.GetConnectionString("DefaultConnection");
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_config.ConnectionString);
+            optionsBuilder.UseSqlServer(GetConfig());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
