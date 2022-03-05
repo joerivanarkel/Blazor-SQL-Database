@@ -19,7 +19,7 @@ namespace Data.Repositories
             return database.Set<T>().AsEnumerable();
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             return database.Set<T>().FirstOrDefault(a => a.Id == id);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
@@ -23,9 +24,11 @@ namespace Data.Repositories
             database.SaveChanges();
         }
 
-
+        public override City GetById(int id)
+        {
+            return database.Cities.Include( x => x.CityRuler).FirstOrDefault( b => b.Id == id);
+        }
 
 
     }
-            public interface ICityRepository : IRepository<City> { }
 }

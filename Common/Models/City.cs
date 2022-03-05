@@ -17,10 +17,10 @@ namespace Common.Models
             {
                 return false;
             }
-            if (Population > 1)
-            {
-                return false;
-            }
+            // if (Population < 1)
+            // {
+            //     return false;
+            // }
 
             return true;
         }

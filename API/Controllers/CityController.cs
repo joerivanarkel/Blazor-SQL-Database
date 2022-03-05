@@ -44,7 +44,7 @@ namespace API.Controllers
             _cityService.Delete(id);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public void Update(City city)
         {
             _cityService.Update(city);

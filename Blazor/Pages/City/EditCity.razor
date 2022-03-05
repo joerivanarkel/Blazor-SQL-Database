@@ -12,7 +12,7 @@
 
 <h1>Update City</h1>
 
-@if (cities == null)
+@if (city == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -43,9 +43,9 @@ else
                             <RadzenLabel Text="Ruler" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenDropDown @bind-Value="city.CityRuler" AllowClear="true" Placeholder="Select something"
-                            Data="@persons" style="width: 100%;" TextProperty="firstName" ValueProperty="city.CityRuler"
-                            Name="CityRuler" SelectedItem="city.CityRuler">
+                            <RadzenDropDown  AllowClear="true" TValue="Person" @bind-Value="city.CityRuler"
+                            Data="@persons" style="width: 100%;" TextProperty="firstName" 
+                            Name="CityRulerDropDown"  >
                             </RadzenDropDown>
                         </div>
                     </div>
@@ -78,7 +78,7 @@ else
         city = await CityServiceUI.GetByIdAsync(_parsedId);
         districts = await DistrictServiceUI.GetAsync();
         persons = await PersonServiceUI.GetAsync();
-        cities = await CityServiceUI.GetCitiesAsync();
+        //cities = await CityServiceUI.GetCitiesAsync();
     }
     private void Update(City city)
     {
