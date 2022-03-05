@@ -62,6 +62,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         occupations = await OccupationServiceUI.GetAsync();
-        occupation.Add(occupation.First());
+        occupation.Add(occupations.First());
     }
 }

@@ -65,6 +65,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         persons = await PersonServiceUI.GetAsync();
-        person.Add(person.First());
+        person.Add(persons.First());
     }
 }
