@@ -22,21 +22,19 @@ else
         <p><em>No persons found</em></p>
     }
     else{
-    <RadzenDataGrid Data="@districts" TItem="District" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+    <RadzenDataGrid Data="@districts" TItem="District" AllowPaging="true" AllowSorting="true" AllowFiltering="true" @bind-Value=@district>
         <Columns>
             <RadzenDataGridColumn TItem="District" Property="Name" Title="Name" />
 
             <RadzenDataGridColumn TItem="District" Width="160px" Title="Edit" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/updatedistrict")) Text="Edit" />
+                <Template Context="district">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() => EditClick(district)) Text="Edit" />
                 </Template>
             </RadzenDataGridColumn>
 
             <RadzenDataGridColumn TItem="District" Width="160px" Title="Delete" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() =>
-                    NavManager.NavigateTo("/deletedistrict")) Text="Delete" />
+                <Template Context="district">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() => Delete(district)) Text="Delete" />
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
@@ -46,9 +44,22 @@ else
 
 @code {
     private IEnumerable<Data.Models.District>? districts;
+    private IList<District> district = new List<District>();  
 
+    private void EditClick(District district)
+    {
+        var uri = "editdistrict/" + district.Id;
+        NavManager.NavigateTo(uri);
+    }
+
+    private void Delete(District district)
+    {
+        var uri = "deletedistrict/" + district.Id;
+        NavManager.NavigateTo(uri);
+    }
     protected override async Task OnInitializedAsync()
     {
         districts = await DistrictServiceUI.GetAsync();
+        district.Add(districts.First());
     }
 }
