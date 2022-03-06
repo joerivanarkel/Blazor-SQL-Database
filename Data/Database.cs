@@ -1,7 +1,8 @@
 using System.Security.Cryptography.X509Certificates;
+using Common;
 using Common.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+
 
 namespace Data
 {
@@ -14,18 +15,11 @@ namespace Data
         public DbSet<Person> Persons { get; set; }
         public DbSet<Region> Regions { get; set; }
 
-        private string GetConfig()
-        {
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Path.GetDirectoryName(System.AppContext.BaseDirectory))
-                .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables()
-                .Build();
-            return config.GetConnectionString("DefaultConnection");
-        }
+        public DbSet<LogTable> Logs { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(GetConfig());
+            optionsBuilder.UseSqlServer(DatabaseConnection.Get());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

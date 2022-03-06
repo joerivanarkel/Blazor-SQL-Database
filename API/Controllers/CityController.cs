@@ -1,6 +1,7 @@
 using Business;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace API.Controllers
 {
@@ -9,13 +10,22 @@ namespace API.Controllers
     public class CityController : ControllerBase
     {
         private ICityService _cityService;
-        public CityController(ICityService cityService)
+        private ILogger<CityController> _logger;
+        
+        public CityController(ICityService cityService, ILogger<CityController> logger)
         {
             _cityService = cityService;
+            _logger= logger;
         }
         [HttpGet]
         public IEnumerable<City> GetAll()
         {
+
+            Log.Logger.Debug("getting all the cities");
+            Log.Logger.Information("getting all the cities");
+            Log.Logger.Warning("getting all the cities");
+            Log.Logger.Fatal("getting all the cities");
+            Log.CloseAndFlush();
             return _cityService.GetAll();
         }
 
