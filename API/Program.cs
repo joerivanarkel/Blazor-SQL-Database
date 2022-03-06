@@ -27,6 +27,7 @@ builder.Services.AddTransient<INationRepository, NationRepository>();
 builder.Services.AddTransient<IOccupationRepository, OccupationRepository>();
 builder.Services.AddTransient<IPersonRepository, PersonRepository>();
 builder.Services.AddTransient<IRegionRepository, RegionRepository>();
+builder.Services.AddTransient<ILogRepository, LogRepository>();
 
 // Services
 builder.Services.AddTransient<ICityService, CityService>();
@@ -35,6 +36,7 @@ builder.Services.AddTransient<INationService, NationService>();
 builder.Services.AddTransient<IOccupationService, OccupationService>();
 builder.Services.AddTransient<IPersonService, PersonService>();
 builder.Services.AddTransient<IRegionService, RegionService>();
+builder.Services.AddTransient<ILogService, LogService>();
 
 var sinkOpts = new MSSqlServerSinkOptions();
 sinkOpts.TableName = "Logs";

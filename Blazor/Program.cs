@@ -39,6 +39,7 @@ builder.Services.AddTransient<INationServiceUI, NationServiceUI>();
 builder.Services.AddTransient<IOccupationServiceUI, OccupationServiceUI>();
 builder.Services.AddTransient<IPersonServiceUI, PersonServiceUI>();
 builder.Services.AddTransient<IRegionServiceUI, RegionServiceUI>();
+builder.Services.AddTransient<ILogServiceUI, LogServiceUI>();
 
 // Radzen
 builder.Services.AddScoped<DialogService>();

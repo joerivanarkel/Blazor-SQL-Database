@@ -20,12 +20,12 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<City> GetAll()
         {
+            for (int i = 0; i < 1000; i++)
+            {
+                Serilog.Log.Logger.Information("getting all the cities");
+                Serilog.Log.CloseAndFlush();
+            }
 
-            Log.Logger.Debug("getting all the cities");
-            Log.Logger.Information("getting all the cities");
-            Log.Logger.Warning("getting all the cities");
-            Log.Logger.Fatal("getting all the cities");
-            Log.CloseAndFlush();
             return _cityService.GetAll();
         }
 

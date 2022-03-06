@@ -14,7 +14,7 @@ namespace Data.Repositories
         {
             database = dbase;
         }
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return database.Set<T>().AsEnumerable();
         }

@@ -1,0 +1,46 @@
+
+
+@using Blazor.Data
+@using Data.Models
+@inject ILogServiceUI LogServiceUI
+
+
+    <h1>Logging</h1>
+    <table>
+
+        @foreach (var item in Messages)
+        {   
+            <tr>
+                <td>@item</td>
+            </tr>
+        }
+    </table>
+
+
+@code
+{
+    private int counter = 0;
+    private IEnumerable<Log> AllLogs;
+        private List<string> Messages = new List<string>();
+    protected override async Task OnInitializedAsync()
+    {
+        //AllLogs = await LogServiceUI.GetAsync();
+            var timer = new System.Threading.Timer((_) =>
+            {
+
+                InvokeAsync( async ()  =>
+                {
+                    await GetLogs();
+                    StateHasChanged();
+                });
+            }, null, 0, 10000);
+    }
+
+    private async Task GetLogs()
+    {
+        //return await LogServiceUI.GetAsync();
+        counter++;
+        Messages.Add( counter.ToString());
+    
+    }
+}

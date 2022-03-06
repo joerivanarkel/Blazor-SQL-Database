@@ -19,7 +19,7 @@ namespace GlobalErrorHandling.Extensions
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if(contextFeature != null)
                     { 
-                        Log.Error($"Something went wrong: {contextFeature.Error}");
+                        Serilog.Log.Error($"Something went wrong: {contextFeature.Error}");
                         await context.Response.WriteAsync(new ErrorDetails()
                         {
                             StatusCode = context.Response.StatusCode,

@@ -15,7 +15,7 @@ namespace Data
         public DbSet<Person> Persons { get; set; }
         public DbSet<Region> Regions { get; set; }
 
-        public DbSet<LogTable> Logs { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
