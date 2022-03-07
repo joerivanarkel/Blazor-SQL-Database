@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.Data.Models
 {
-    public class Person
+    public class Person : Entity
     {
         public string firstName { get; set; }
         public string lastName { get; set; }

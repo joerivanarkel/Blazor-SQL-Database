@@ -1,6 +1,8 @@
 using Business;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
+using Business.Interfaces;
 
 namespace API.Controllers
 {
@@ -9,13 +11,21 @@ namespace API.Controllers
     public class CityController : ControllerBase
     {
         private ICityService _cityService;
-        public CityController(ICityService cityService)
+        private ILogger<CityController> _logger;
+        
+        public CityController(ICityService cityService, ILogger<CityController> logger)
         {
             _cityService = cityService;
+            _logger= logger;
         }
         [HttpGet]
         public IEnumerable<City> GetAll()
         {
+            for (int i = 0; i < 1000; i++)
+            {
+                Serilog.Log.Logger.Information("getting all the cities");
+                Serilog.Log.CloseAndFlush();
+            }
             return _cityService.GetAll();
         }
 
@@ -26,9 +36,16 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public void Create(City city)
+        public void Create( [FromBody]  City city)
         {
-            _cityService.Create(city);
+            if (city.IsValid())
+            {
+                _cityService.Create(city);
+            }
+            else
+            {
+                // Http response message
+            }
         }
 
         [HttpDelete("{id}")]
@@ -37,10 +54,10 @@ namespace API.Controllers
             _cityService.Delete(id);
         }
 
-        [HttpPut("{id}")]
-        public void Update(int id, City city)
+        [HttpPut]
+        public void Update(City city)
         {
-            _cityService.Update(id, city);
+            _cityService.Update(city);
         }
     }
 }

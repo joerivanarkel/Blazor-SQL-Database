@@ -14,17 +14,17 @@ namespace Data.Repositories
         {
             database = dbase;
         }
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return database.Set<T>().AsEnumerable();
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             return database.Set<T>().FirstOrDefault(a => a.Id == id);
         }
 
-        public void Create(T entity)
+        public virtual void Create(T entity)
         {
             database.Set<T>().Add(entity);
             database.SaveChanges();
@@ -40,7 +40,7 @@ namespace Data.Repositories
             }
         }
 
-        public void Update(int id, T entity)
+        public void Update(T entity)
         {
             database.Set<T>().Update(entity);
             database.SaveChanges();

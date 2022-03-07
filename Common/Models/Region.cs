@@ -8,6 +8,6 @@ namespace Common.Models
     public class Region : Entity
     {
         public string Name { get; set; }
-        public virtual City? RegionCapital { get; set; }
+        public City? RegionCapital { get; set; }
     }
 }

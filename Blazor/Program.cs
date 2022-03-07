@@ -4,10 +4,11 @@ using Blazor.Data.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
- MyConfig _myConfig = GetConfig();
+MyConfig _myConfig = GetConfig();
 MyConfig GetConfig()
 {
     var config = new ConfigurationBuilder()
@@ -38,6 +39,13 @@ builder.Services.AddTransient<INationServiceUI, NationServiceUI>();
 builder.Services.AddTransient<IOccupationServiceUI, OccupationServiceUI>();
 builder.Services.AddTransient<IPersonServiceUI, PersonServiceUI>();
 builder.Services.AddTransient<IRegionServiceUI, RegionServiceUI>();
+builder.Services.AddTransient<ILogServiceUI, LogServiceUI>();
+
+// Radzen
+builder.Services.AddScoped<DialogService>();
+builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<TooltipService>();
+builder.Services.AddScoped<ContextMenuService>();
 
 var app = builder.Build();
 
@@ -53,7 +61,7 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 

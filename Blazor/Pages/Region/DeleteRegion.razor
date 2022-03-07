@@ -1,0 +1,31 @@
+﻿@page "/deleteregion/{id}"
+
+
+<PageTitle>Edit Region</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject IRegionServiceUI RegionServiceUI
+@inject NavigationManager navigationManager
+
+<h1>Are you sure</h1>
+<RadzenButton Click=@(() => Delete()) Text="Confirm"  ButtonStyle="ButtonStyle.Danger"/>
+<RadzenButton Click=@(() => GoBack()) Text="Cancel"  ButtonStyle="ButtonStyle.Primary"/>
+
+@code
+{
+    [Parameter]
+    public string id { get; set; }
+
+    private async void Delete()
+    {
+        var parsedId = int.Parse(id);
+        await RegionServiceUI.DeleteAsync(parsedId);
+        GoBack();
+    }
+
+    private void GoBack()
+    {
+        navigationManager.NavigateTo("/region");
+    }
+}

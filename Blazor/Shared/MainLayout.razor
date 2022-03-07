@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Blazor.Component
+@inherits LayoutComponentBase
 
 <PageTitle>Blazor</PageTitle>
 
@@ -16,5 +17,7 @@
         <article class="content px-4">
             @Body
         </article>
+        <Logs/>
     </main>
+    <RadzenNotification />
 </div>

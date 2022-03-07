@@ -2,13 +2,12 @@
 
 
 using Data;
-
-//FillPerson();
+FillOccupation();
 // FillRegion();
-// FillOccupation();
 // FillNation();
-FillDistrict();
-FillCity();
+// FillDistrict();
+// FillCity();
+FillPerson();
 
 Console.WriteLine("Success");
 Console.ReadLine();
@@ -24,7 +23,6 @@ void FillPerson()
         Birthdate = new DateTime(1968,1,12),
         Sex = Common.Models.Sex.Male,
         IsRuler =true
-
     });
     database.SaveChanges();
 }
@@ -56,7 +54,8 @@ void FillNation()
     {
         Name = "Netherlands",
         Type = Common.Models.Type.Monarchy,
-        Population = 17000000
+        Population = 17000000,
+        
     });
     database.SaveChanges();
 }
@@ -74,10 +73,12 @@ void FillDistrict()
 void FillCity()
 {
     var database = new Database();
-    database.Cities.Add(new Common.Models.City()
+    var city = new Common.Models.City()
     {
         Name = "Utrecht",
-        Population = 358974
-    });
+        Population = 358974,
+        CityRuler = database.Persons.FirstOrDefault()
+    };
+    database.Cities.Add(city);
     database.SaveChanges();
-}
+}  

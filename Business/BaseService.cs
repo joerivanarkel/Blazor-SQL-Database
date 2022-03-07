@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Data.Repositories;
+using Business.Interfaces;
 
 namespace Business
 {
@@ -35,9 +36,9 @@ namespace Business
             repository.Create(entity);
         }
 
-        public void Update(int id, T entity)
+        public void Update(T entity)
         {
-            repository.Update(id, entity);
+            repository.Update(entity);
         }
     }
 }

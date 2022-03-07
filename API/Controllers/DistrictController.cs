@@ -1,6 +1,7 @@
 using Business;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Business.Interfaces;
 
 namespace API.Controllers
 {
@@ -16,6 +17,11 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<District> GetAll()
         {
+            for (int i = 0; i < 1000; i++)
+            {
+            Serilog.Log.Logger.Information("getting all the districts");
+            Serilog.Log.CloseAndFlush();
+            }
             return _districtService.GetAll();
         }
 
@@ -37,10 +43,10 @@ namespace API.Controllers
             _districtService.Delete(id);
         }
 
-        [HttpPut("{id}")]
-        public void Update(int id, District district)
+        [HttpPut]
+        public void Update(District district)
         {
-            _districtService.Update(id, district);
+            _districtService.Update(district);
         }
     }
 }

@@ -1,6 +1,7 @@
 using Business;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Business.Interfaces;
 
 namespace API.Controllers
 {
@@ -16,6 +17,11 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<Person> GetAll()
         {
+            for (int i = 0; i < 1000; i++)
+            {
+            Serilog.Log.Logger.Information("getting all the persons");
+            Serilog.Log.CloseAndFlush();
+            }
             return _personService.GetAll();
         }
 
@@ -37,10 +43,10 @@ namespace API.Controllers
             _personService.Delete(id);
         }
 
-        [HttpPut("{id}")]
-        public void Update(int id, Person person)
+        [HttpPut]
+        public void Update(Person person)
         {
-            _personService.Update(id, person);
+            _personService.Update(person);
         }
 }
 }
