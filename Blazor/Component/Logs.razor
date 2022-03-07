@@ -1,46 +1,43 @@
-
-
 @using Blazor.Data
 @using Data.Models
+@using System.Collections
 @inject ILogServiceUI LogServiceUI
 
 
-    <h1>Logging</h1>
-    <table>
+<h1>Logging</h1>
+<table>
 
-        @foreach (var item in Messages)
-        {   
+    @if (AllLogs != null)
+    {
+        @foreach (var item in AllLogs)
+        {
             <tr>
-                <td>@item</td>
+                <td>@item.Message</td>
             </tr>
         }
-    </table>
+    }
+</table>
 
 
 @code
 {
     private int counter = 0;
-    private IEnumerable<Log> AllLogs;
-        private List<string> Messages = new List<string>();
+    private List<Log> AllLogs = new List<Log>();
     protected override async Task OnInitializedAsync()
     {
-        //AllLogs = await LogServiceUI.GetAsync();
-            var timer = new System.Threading.Timer((_) =>
-            {
+        var timer = new System.Threading.Timer((_) =>
+        {
 
-                InvokeAsync( async ()  =>
-                {
-                    await GetLogs();
-                    StateHasChanged();
-                });
-            }, null, 0, 10000);
+            InvokeAsync(async () =>
+    {
+    AllLogs = await GetLogs();
+    StateHasChanged();
+            }); 
+        }, null, 0, 10000);
     }
 
-    private async Task GetLogs()
+    private async Task<List<Log>> GetLogs()
     {
-        //return await LogServiceUI.GetAsync();
-        counter++;
-        Messages.Add( counter.ToString());
-    
+        return await LogServiceUI.GetAsync();
     }
 }

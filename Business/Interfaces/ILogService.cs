@@ -1,6 +1,6 @@
 using Common.Models;
 
-namespace Business;
+namespace Business.Interfaces;
 
 public interface ILogService // : IBaseService<Log>
 {

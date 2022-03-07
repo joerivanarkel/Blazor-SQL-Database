@@ -1,6 +1,7 @@
 using Business;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Business.Interfaces;
 
 namespace API.Controllers
 {
@@ -16,6 +17,11 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<Nation> GetAll()
         {
+            for (int i = 0; i < 1000; i++)
+            {
+            Serilog.Log.Logger.Information("getting all the nations");
+            Serilog.Log.CloseAndFlush();
+            }
             return _nationService.GetAll();
         }
 
@@ -37,7 +43,7 @@ namespace API.Controllers
             _nationService.Delete(id);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public void Update(Nation nation)
         {
             _nationService.Update(nation);

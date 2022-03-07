@@ -1,6 +1,6 @@
-using Business;
 using Common.Models;
 using Data.Repositories;
+using Business.Interfaces;
 
 namespace Business
 {
@@ -9,5 +9,3 @@ namespace Business
         public DistrictService(IDistrictRepository districtRepository) : base(districtRepository){}
     }
 }
-
-public interface IDistrictService : IBaseService<District> { }

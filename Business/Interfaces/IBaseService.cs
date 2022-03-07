@@ -1,4 +1,4 @@
-namespace Business
+namespace Business.Interfaces
 {
     public interface IBaseService<T> where T : class
     {

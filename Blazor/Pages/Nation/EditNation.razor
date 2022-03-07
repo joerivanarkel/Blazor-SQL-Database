@@ -14,71 +14,69 @@
 
 @if (nation == null)
 {
-        <p><em>Loading...</em></p>
+    <p><em>Loading...</em></p>
 }
 else
 {
-        <RadzenTemplateForm Data="@nation" Submit="@((Nation nation) => { Update(nation); })">
-            <div class="row">
-                <div class="col-md-3">
-                    <RadzenFieldset Text="Enter details">
-                        <div style="margin-bottom: 1rem;" class="row">
-                            <div class="col-md-4 align-items-center d-flex">
-                                <RadzenLabel Text="Name" />
-                            </div>
-                            <div class="col-md-8">
-                                <RadzenTextBox @bind-Value="nation.Name" style="width: 100%;" Name="Name" />
-                            </div>
+    <RadzenTemplateForm Data="@nation" Submit="@((Nation nation) => { Update(nation); })">
+        <div class="row">
+            <div class="col-md-3">
+                <RadzenFieldset Text="Enter details">
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Name" />
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 align-items-center d-flex">
-                                <RadzenLabel Text="Government Type" />
-                            </div>
-                            <div class="col-md-8">
-                                <RadzenDropDown @bind-Value="nation.Type" style="width: 100%;" TextProperty="Type"
-                            ValueProperty="Type" Name="Type">
-                                </RadzenDropDown>
-                            </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox @bind-Value="nation.Name" style="width: 100%;" Name="Name" />
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 align-items-center d-flex">
-                                <RadzenLabel Text="Capital" />
-                            </div>
-                            <div class="col-md-8">
-                                <RadzenDropDown @bind-Value="nation.NationCapital" AllowClear="true"
-                            Placeholder="Select something" Data="@cities" style="width: 100%;" TextProperty="Name"
-                            ValueProperty="nation.NationCapital" Name="NationCapital">
-                                </RadzenDropDown>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Government Type" />
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 align-items-center d-flex">
-                                <RadzenLabel Text="Ruler" />
-                            </div>
-                            <div class="col-md-8">
-                                <RadzenDropDown @bind-Value="nation.NationRuler" AllowClear="true"
-                            Placeholder="Select something" Data="@persons" style="width: 100%;" TextProperty="firstName"
-                            ValueProperty="nation.NationRuler" Name="NationRuler">
-                                </RadzenDropDown>
-                            </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="nation.Type" style="width: 100%;" Data="@Enum.GetValues(typeof(Blazor.Data.Models.Type))" TextProperty="Type" Name="Type">
+                            </RadzenDropDown>
                         </div>
-                        <div style="margin-bottom: 1rem;" class="row">
-                            <div class="col-md-4 align-items-center d-flex">
-                                <RadzenLabel Text="Population" />
-                            </div>
-                            <div class="col-md-8">
-                                <RadzenNumeric style="width: 100%;" Name="Population" @bind-Value="nation.Population" />
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Capital" />
                         </div>
-                    </RadzenFieldset>
-                </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="nation.NationCapital" AllowClear="true"
+                            Data="@cities" style="width: 100%;" TextProperty="Name" TValue="City"
+                            Name="NationCapital">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Ruler" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="nation.NationRuler" AllowClear="true"
+                            Data="@persons" style="width: 100%;" TextProperty="firstName"TValue="Person" Name="NationRuler">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Population" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenNumeric style="width: 100%;" Name="Population" @bind-Value="nation.Population" />
+                        </div>
+                    </div>
+                </RadzenFieldset>
             </div>
-            <div class="row">
-                <div class="col-md-4" style="margin-top: 16px;">
-                    <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
             </div>
-        </RadzenTemplateForm>
+        </div>
+    </RadzenTemplateForm>
 }
 
 @code

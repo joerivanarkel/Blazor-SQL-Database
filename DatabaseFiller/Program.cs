@@ -3,10 +3,10 @@
 
 using Data;
 FillOccupation();
-FillRegion();
-FillNation();
-FillDistrict();
-FillCity();
+// FillRegion();
+// FillNation();
+// FillDistrict();
+// FillCity();
 FillPerson();
 
 Console.WriteLine("Success");

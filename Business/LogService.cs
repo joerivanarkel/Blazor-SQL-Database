@@ -1,5 +1,6 @@
 ﻿using Common.Models;
 using Data.Repositories;
+using Business.Interfaces;
 
 namespace Business;
 public class LogService : ILogService

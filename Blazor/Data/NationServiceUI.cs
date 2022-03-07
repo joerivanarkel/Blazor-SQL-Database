@@ -26,6 +26,6 @@ namespace Blazor.Data
             await _httpClient.DeleteAsync($"Nation/{id}");
 
         public async Task UpdateAsync(Nation nation) =>
-            await _httpClient.PutAsJsonAsync<Nation>("District", nation);
+            await _httpClient.PutAsJsonAsync<Nation>("Nation", nation);
     }
 }

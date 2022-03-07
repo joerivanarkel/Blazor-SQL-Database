@@ -52,7 +52,6 @@ else
     {
         _parsedId = int.Parse(id);
         district = await DistrictServiceUI.GetByIdAsync(_parsedId);
-        districts = await DistrictServiceUI.GetAsync();
     }
     private void Update(District district)
     {

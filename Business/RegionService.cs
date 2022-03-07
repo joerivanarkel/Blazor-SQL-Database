@@ -1,6 +1,6 @@
-using Business;
 using Common.Models;
 using Data.Repositories;
+using Business.Interfaces;
 
 namespace Business
 {
@@ -9,5 +9,3 @@ namespace Business
         public RegionService(IRegionRepository regionRepository) : base(regionRepository) { }
     }
 }
-
-public interface IRegionService : IBaseService<Region> { }

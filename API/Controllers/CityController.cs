@@ -2,6 +2,7 @@ using Business;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using Business.Interfaces;
 
 namespace API.Controllers
 {
@@ -25,7 +26,6 @@ namespace API.Controllers
                 Serilog.Log.Logger.Information("getting all the cities");
                 Serilog.Log.CloseAndFlush();
             }
-
             return _cityService.GetAll();
         }
 

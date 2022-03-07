@@ -4,7 +4,7 @@ namespace Blazor.Data
 {
     public interface ILogServiceUI
     {
-        Task<IEnumerable<Log>> GetAsync();
+        Task<List<Log>> GetAsync();
         Task<Log> GetByIdAsync(int id);
     }
 }

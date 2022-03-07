@@ -34,7 +34,7 @@ else
                             <RadzenLabel Text="Government Type" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenDropDown @bind-Value="nation.Type" style="width: 100%;" TextProperty="Type"
+                            <RadzenDropDown @bind-Value="nation.Type" Data="@Enum.GetValues(typeof(Blazor.Data.Models.Type))" style="width: 100%;" TextProperty="Type"
                             ValueProperty="Type" Name="Type">
                             </RadzenDropDown>
                         </div>

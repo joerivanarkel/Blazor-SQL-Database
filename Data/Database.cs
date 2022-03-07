@@ -34,6 +34,29 @@ namespace Data
                 .HasForeignKey<Person>(b => b.CityId)
                 .OnDelete(DeleteBehavior.SetNull); 
 
+            modelBuilder.Entity<Nation>()
+                .HasOne( e => e.NationRuler)
+                .WithOne()
+                .HasForeignKey<Person>( b => b.NationId)
+                .OnDelete(DeleteBehavior.SetNull);
+            
+            modelBuilder.Entity<Nation>()
+                .HasOne( e=> e.NationCapital)
+                .WithOne()
+                .HasForeignKey<City>( b=> b.NationId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Region>()
+                .HasOne( b=> b.RegionCapital)
+                .WithOne()
+                .HasForeignKey<City>(b => b.RegionId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Person>()
+                .HasOne( b => b.Occupation)
+                .WithOne()
+                .HasForeignKey<Occupation>( b => b.PersonId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

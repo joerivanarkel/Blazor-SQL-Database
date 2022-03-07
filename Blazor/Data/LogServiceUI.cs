@@ -13,8 +13,8 @@ namespace Blazor.Data
         public LogServiceUI(HttpClient httpClient) =>
            _httpClient = httpClient;
 
-        public async Task<IEnumerable<Log>> GetAsync() =>
-            await _httpClient.GetFromJsonAsync<IEnumerable<Log>>("Log");
+        public async Task<List<Log>> GetAsync() =>
+            await _httpClient.GetFromJsonAsync<List<Log>>("Log");
 
         public async Task<Log> GetByIdAsync(int id) =>
             await _httpClient.GetFromJsonAsync<Log>($"Log/{id}");

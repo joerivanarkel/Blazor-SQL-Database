@@ -34,9 +34,7 @@ else
                             <RadzenLabel Text="Capital" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenDropDown @bind-Value="region.RegionCapital" AllowClear="true"
-                            Placeholder="Select something" Data="@cities" style="width: 100%;" TextProperty="Name"
-                            ValueProperty="region.RegionCapital" Name="RegionCapital">
+                            <RadzenDropDown @bind-Value="region.RegionCapital" AllowClear="true" TValue="City" Data="@cities" style="width: 100%;" TextProperty="Name" Name="RegionCapital">
                             </RadzenDropDown>
                         </div>
                     </div>

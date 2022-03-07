@@ -2,6 +2,7 @@ using Business;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using Business.Interfaces;
 
 namespace API.Controllers
 {
@@ -20,9 +21,11 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<Common.Models.Log> GetAll()
         {
-
+            for (int i = 0; i < 1000; i++)
+            {
             Serilog.Log.Logger.Debug("getting all the logs");
             Serilog.Log.CloseAndFlush();
+            }
             return _logService.GetAll();
         }
 
