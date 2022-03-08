@@ -14,19 +14,19 @@ namespace Data.Repositories
         {
             database = dbase;
         }
-        public virtual IEnumerable<T> GetAll()
+        public async virtual Task<IAsyncEnumerable<T>> GetAll()
         {
-            return database.Set<T>().AsEnumerable();
+            return database.Set<T>().AsAsyncEnumerable();
         }
 
-        public virtual T GetById(int id)
+        public async virtual Task<T> GetByIdAsync(int id)
         {
-            return database.Set<T>().FirstOrDefault(a => a.Id == id);
+            return await database.Set<T>().FindAsync(id);
         }
 
-        public virtual void Create(T entity)
+        public async virtual void CreateAsync(T entity)
         {
-            database.Set<T>().Add(entity);
+            database.Set<T>().AddAsync(entity);
             database.SaveChanges();
         }
 

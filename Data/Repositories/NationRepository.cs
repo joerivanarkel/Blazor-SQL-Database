@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Models;
+using Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
@@ -11,7 +12,7 @@ namespace Data.Repositories
     {
         public NationRepository(Database database) : base(database){}
 
-        public override void Create(Nation nation)
+        public override void CreateAsync(Nation nation)
         {
             var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == nation.NationRuler.FirstName);
             var existingCity = database.Cities.FirstOrDefault( x => x.Name == nation.NationCapital.Name );
@@ -33,7 +34,7 @@ namespace Data.Repositories
             database.SaveChanges();
         }
 
-        public override Nation GetById(int id)
+        public async override Task<Nation> GetByIdAsync(int id)
         {
             return database.Nations.Include(x => x.NationRuler).Include(y => y.NationCapital).FirstOrDefault(b => b.Id == id);
         }

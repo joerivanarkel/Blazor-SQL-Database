@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Models;
+using Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
@@ -11,7 +12,7 @@ namespace Data.Repositories
     {
         public RegionRepository(Database database) : base(database){}
 
-        public override void Create(Region region)
+        public override void CreateAsync(Region region)
         {
             var existingCity = database.Cities.FirstOrDefault(a => a.Name == region.RegionCapital.Name);
             if (existingCity != null)
@@ -24,11 +25,9 @@ namespace Data.Repositories
             database.SaveChanges();
         }
 
-        public override Region GetById(int id)
+        public async override Task<Region> GetByIdAsync(int id)
         {
             return database.Regions.Include(x => x.RegionCapital).FirstOrDefault(b => b.Id == id);
         }
     }
-
-    public interface IRegionRepository: IRepository<Region> { }
 }

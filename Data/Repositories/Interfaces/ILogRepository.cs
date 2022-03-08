@@ -1,6 +1,6 @@
 using Common.Models;
 
-namespace Data.Repositories
+namespace Data.Repositories.Interfaces
 {
     public interface ILogRepository: IRepository<Log> { 
 

@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using Serilog.Sinks.MSSqlServer;
 using System.Data;
 using Business.Interfaces;
+using Data.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

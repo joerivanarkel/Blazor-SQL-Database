@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Models;
+using Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
@@ -11,11 +12,11 @@ namespace Data.Repositories
     {
         public CityRepository(Database database) : base(database) { }
 
-        public override void Create(City city)
+        public async override void CreateAsync(City city)
         {
-            var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == city.CityRuler.FirstName );
-            if (existingPerson != null)
+            if (city.CityRuler != null)
             {
+                var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == city.CityRuler.FirstName);
                 var attachedPerson = database.Entry(existingPerson);
                 attachedPerson.CurrentValues.SetValues(city.CityRuler);
                 city.CityRuler = attachedPerson.Entity;
@@ -24,7 +25,7 @@ namespace Data.Repositories
             database.SaveChanges();
         }
 
-        public override City GetById(int id)
+        public async override Task<City> GetByIdAsync(int id)
         {
             return database.Cities.Include( x => x.CityRuler).FirstOrDefault( b => b.Id == id);
         }
