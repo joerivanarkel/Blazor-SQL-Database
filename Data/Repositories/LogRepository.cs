@@ -1,4 +1,5 @@
 using Common.Models;
+using Data.Repositories.Interfaces;
 
 namespace Data.Repositories
 {
@@ -11,9 +12,9 @@ namespace Data.Repositories
             return database.Logs.Where( x => x.Id > id);
         }
 
-        public override IEnumerable<Log> GetAll()
-        {
-            return database.Logs.OrderByDescending( x => x.Id).Take(10);
+        public async override Task<IAsyncEnumerable<Log>> GetAll()
+        { 
+            return database.Logs.AsAsyncEnumerable();
         }
     }
 }

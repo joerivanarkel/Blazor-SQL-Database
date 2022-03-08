@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Data.Repositories;
 using Business.Interfaces;
+using Data.Repositories.Interfaces;
 
 namespace Business
 {
@@ -16,14 +17,14 @@ namespace Business
             repository = repos;
         }
 
-        public IEnumerable<T> GetAll()
+        public async IAsyncEnumerable<T> GetAll()
         {
-            return repository.GetAll();
+            return await repository.GetAll();
         }
 
-        public T GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            return repository.GetById(id);
+            return await repository.GetByIdAsync(id);
         }
 
         public void Delete(int id)
@@ -31,9 +32,9 @@ namespace Business
             repository.Delete(id);
         }
 
-        public void Create(T entity)
+        public async void CreateAsync(T entity)
         {
-            repository.Create(entity);
+            repository.CreateAsync(entity);
         }
 
         public void Update(T entity)
