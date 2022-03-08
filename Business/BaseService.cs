@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Data.Repositories;
+using Business.Interfaces;
 
 namespace Business
 {
-    public interface IBaseService<T> where T : class
-    {
-        IEnumerable<T> GetAll();
-    }
-
     public class BaseService<T> : IBaseService<T> where T : class
     {
         protected IRepository<T> repository;
@@ -23,6 +19,26 @@ namespace Business
         public IEnumerable<T> GetAll()
         {
             return repository.GetAll();
+        }
+
+        public T GetById(int id)
+        {
+            return repository.GetById(id);
+        }
+
+        public void Delete(int id)
+        {
+            repository.Delete(id);
+        }
+
+        public void Create(T entity)
+        {
+            repository.Create(entity);
+        }
+
+        public void Update(T entity)
+        {
+            repository.Update(entity);
         }
     }
 }

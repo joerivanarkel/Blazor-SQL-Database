@@ -1,0 +1,107 @@
+﻿@page "/editnation/{id}"
+
+<PageTitle>Update Nation</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject INationServiceUI NationServiceUI
+@inject ICityServiceUI CityServiceUI
+@inject IPersonServiceUI PersonServiceUI
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.WebUtilities
+
+<h1>Update Nation</h1>
+
+@if (nation == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenTemplateForm Data="@nation" Submit="@((Nation nation) => { Update(nation); })">
+        <div class="row">
+            <div class="col-md-3">
+                <RadzenFieldset Text="Enter details">
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Name" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox @bind-Value="nation.Name" style="width: 100%;" Name="Name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Government Type" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="nation.Type" style="width: 100%;" Data="@Enum.GetValues(typeof(Blazor.Data.Models.Type))" TextProperty="Type" Name="Type">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Capital" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="nation.NationCapital" AllowClear="true"
+                            Data="@cities" style="width: 100%;" TextProperty="Name" TValue="City"
+                            Name="NationCapital">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Ruler" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="nation.NationRuler" AllowClear="true"
+                            Data="@persons" style="width: 100%;" TextProperty="firstName"TValue="Person" Name="NationRuler">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Population" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenNumeric style="width: 100%;" Name="Population" @bind-Value="nation.Population" />
+                        </div>
+                    </div>
+                </RadzenFieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+}
+
+@code
+{
+    [Parameter]
+    public string id { get; set; }
+    private Nation nation = new Nation();
+    private int _parsedId;
+
+    private IEnumerable<Nation>? nations;
+    private IEnumerable<City>? cities;
+    private IEnumerable<Person>? persons;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _parsedId = int.Parse(id);
+        nation = await NationServiceUI.GetByIdAsync(_parsedId);
+        nations = await NationServiceUI.GetAsync();
+        cities = await CityServiceUI.GetCitiesAsync();
+        persons = await PersonServiceUI.GetAsync();
+    }
+    private void Update(Nation nation)
+    {
+        nation.Id = _parsedId;
+        NationServiceUI.UpdateAsync(nation);
+        NavigationManager.NavigateTo("/nation");
+    }
+}

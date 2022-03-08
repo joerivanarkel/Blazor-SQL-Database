@@ -1,0 +1,82 @@
+﻿@page "/createcity"
+
+<PageTitle>Create City</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject ICityServiceUI CityServiceUI
+@inject IDistrictServiceUI DistrictServiceUI
+@inject IPersonServiceUI PersonServiceUI
+@inject NavigationManager NavigationManager
+
+<h1>Create City</h1>
+
+@if (cities == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenTemplateForm Data="@city" Submit="@((City city) => { Create(city); })">
+        <div class="row">
+            <div class="col-md-3">
+                <RadzenFieldset Text="Enter details">
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Name" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox @bind-Value="city.Name" style="width: 100%;" Name="Name" />
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Population" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenNumeric style="width: 100%;" Name="Population" @bind-Value="city.Population" />
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;" class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Ruler" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="city.CityRuler" AllowClear="true" Placeholder="Select something"
+                            Data="@persons" style="width: 100%;" TextProperty="firstName" ValueProperty="city.CityRuler"
+                            Name="CityRuler">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                </RadzenFieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+}
+
+@code
+{
+    private City city = new City();
+
+    private IEnumerable<District>? districts;
+    private IEnumerable<Person>? persons;
+    private IEnumerable<City>? cities;
+    private int _foundId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        districts = await DistrictServiceUI.GetAsync();
+        persons = await PersonServiceUI.GetAsync();
+        cities = await CityServiceUI.GetCitiesAsync();
+    }
+    private void Create(City city)
+    {
+        CityServiceUI.CreateAsync(city);
+        NavigationManager.NavigateTo("/city");
+    }
+}

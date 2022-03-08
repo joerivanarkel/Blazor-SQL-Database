@@ -8,5 +8,6 @@ namespace Common.Models
     public class Occupation : Entity
     {
         public string Name { get; set; }
+        public int? PersonId { get; set; }
     }
 }

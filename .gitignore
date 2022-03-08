@@ -455,5 +455,4 @@ $RECYCLE.BIN/
 
 ## Link to database
 appsettings.json
-*/Migrations/* 
-*/obj/*
+*/Migrations/*

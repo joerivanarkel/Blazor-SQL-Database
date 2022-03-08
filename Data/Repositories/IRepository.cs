@@ -7,6 +7,10 @@ namespace Data.Repositories
 {
     public interface IRepository<T> where T: class
     {
-         IEnumerable<T> GetAll();
+        void Create(T entity);
+        void Delete(int id);
+        IEnumerable<T> GetAll();
+        T GetById(int id);
+        void Update(T entity);
     }
 }

@@ -1,0 +1,66 @@
+﻿@page "/region"
+
+<PageTitle>Region Table</PageTitle>
+
+@using Blazor.Data
+@using Blazor.Data.Models
+@inject IRegionServiceUI RegionServiceUI
+@inject NavigationManager NavManager
+
+<h1>Region Table</h1>
+<RadzenButton Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click=@(() =>
+    NavManager.NavigateTo("/createregion")) Text="Create New" />
+    
+@if (regions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (regions.Count() == 0)
+    {
+        <p><em>No persons found</em></p>
+    }
+    else
+    {
+<RadzenDataGrid Data="@regions" TItem="Region" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="Region" Property="Name" Title="Name" />
+
+            <RadzenDataGridColumn TItem="Region" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                <Template Context="region">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() => EditClick(region)) Text="Edit" />
+                </Template>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="Region" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                <Template Context="region">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() => Delete(region)) Text="Delete" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+    }
+}
+
+@code {
+    private IEnumerable<Data.Models.Region>? regions;
+    private IList<Region> region = new List<Region>();
+
+    private void EditClick(Region region)
+    {
+        var uri = "editregion/" + region.Id;
+        NavManager.NavigateTo(uri);
+    }
+    private void Delete(Region region)
+    {
+        var uri = "deleteregion/" + region.Id;
+        NavManager.NavigateTo(uri);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        regions = await RegionServiceUI.GetAsync();
+        region.Add(regions.First());
+    }
+}

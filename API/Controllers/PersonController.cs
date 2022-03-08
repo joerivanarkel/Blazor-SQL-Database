@@ -1,6 +1,7 @@
 using Business;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Business.Interfaces;
 
 namespace API.Controllers
 {
@@ -16,41 +17,36 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<Person> GetAll()
         {
+            for (int i = 0; i < 1000; i++)
+            {
+            Serilog.Log.Logger.Information("getting all the persons");
+            Serilog.Log.CloseAndFlush();
+            }
             return _personService.GetAll();
         }
 
-        // [HttpGet("{id}", Name = "GetPerson")]
-        // public IActionResult Get(int id)
-        // {
-        //     return _personService.Get(id);
-        // }
+        [HttpGet("{id}", Name = "GetPerson")]
+        public Person GetById(int id)
+        {
+            return _personService.GetById(id);
+        }
 
-        // [HttpPost]
-        // public IActionResult Create([FromBody] Person person)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
+        [HttpPost]
+        public void Create(Person person)
+        {
+            _personService.Create(person);
+        }
 
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _personService.Delete(id);
+        }
 
-        //     return _personService.Create(person);
-        // }
-
-        // [HttpPut("{id}")]
-        // public IActionResult Put(int id, [FromBody] Person person)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-        //     return _personService.Update( id, person);
-        // }
-
-        // [HttpDelete("{id}")]
-        // public IActionResult Delete(int id)
-        // {
-        //     return _personService.Delete(id);
-        // }
+        [HttpPut]
+        public void Update(Person person)
+        {
+            _personService.Update(person);
+        }
 }
 }

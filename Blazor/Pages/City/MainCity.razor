@@ -1,0 +1,62 @@
+@page "/city"
+
+<PageTitle>City Table</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject ICityServiceUI CityServiceUI
+@inject NavigationManager NavManager
+
+<h1>City Table</h1>
+<RadzenButton Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click=@(() =>
+    NavManager.NavigateTo("/createcity")) Text="Create New" />
+
+@if (cities == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenDataGrid Data="@cities" TItem="City" AllowPaging="true" AllowSorting="true" AllowFiltering="true" @bind-Value=@city >
+        <Columns>
+            <RadzenDataGridColumn TItem="City" Property="Name" Title="Name" />
+            <RadzenDataGridColumn TItem="City" Property="Population" Title="Population" />
+
+            <RadzenDataGridColumn TItem="City" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                <Template Context="city">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() => EditClick(city)) Text="Edit" />
+                </Template>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="City" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                <Template Context="city">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Text="Delete" Click=@(() => Delete(city)) />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+
+}
+
+@code {
+    private IEnumerable<City>? cities;
+    private IList<City> city = new List<City>();        
+
+    private void EditClick(City city)
+    {
+        var uri = "editcity/" + city.Id;
+        NavManager.NavigateTo(uri);
+    }
+
+    private void Delete(City city)
+    {
+        var uri = "deletecity/" + city.Id;
+        NavManager.NavigateTo(uri);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        cities = await CityServiceUI.GetCitiesAsync();
+        city.Add(cities.First());
+    }
+}
