@@ -56,14 +56,12 @@ else
     private Region region = new Region();
     private int _parsedId;
 
-    private IEnumerable<Region>? regions;
     private IEnumerable<City>? cities;
 
     protected override async Task OnInitializedAsync()
     {
         _parsedId = int.Parse(id);
         region = await RegionServiceUI.GetByIdAsync(_parsedId);
-        regions = await RegionServiceUI.GetAsync();
         cities = await CityServiceUI.GetCitiesAsync();
     }
     private void Update(Region region)

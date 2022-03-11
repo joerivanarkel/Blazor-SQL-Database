@@ -12,20 +12,23 @@ namespace Data.Repositories
     {
         public RegionRepository(Database database) : base(database){}
 
-        public override void CreateAsync(Region region)
+        public override void Create(Region region)
         {
-            var existingCity = database.Cities.FirstOrDefault(a => a.Name == region.RegionCapital.Name);
-            if (existingCity != null)
+            if (region.RegionCapital != null)
             {
-                var attachedCity = database.Entry(existingCity);
-                attachedCity.CurrentValues.SetValues(region.RegionCapital);
-                region.RegionCapital = attachedCity.Entity;
+                var existingCity = database.Cities.FirstOrDefault(a => a.Name == region.RegionCapital.Name);
+                if (existingCity != null)
+                {
+                    var attachedCity = database.Entry(existingCity);
+                    attachedCity.CurrentValues.SetValues(region.RegionCapital);
+                    region.RegionCapital = attachedCity.Entity;
+                }
             }
             database.Regions.Add(region);
             database.SaveChanges();
         }
 
-        public async override Task<Region> GetByIdAsync(int id)
+        public override Region GetById(int id)
         {
             return database.Regions.Include(x => x.RegionCapital).FirstOrDefault(b => b.Id == id);
         }

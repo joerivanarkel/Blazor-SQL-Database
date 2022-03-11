@@ -17,14 +17,14 @@ namespace Business
             repository = repos;
         }
 
-        public async IAsyncEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return await repository.GetAll();
+            return repository.GetAll();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public T GetById(int id)
         {
-            return await repository.GetByIdAsync(id);
+            return repository.GetById(id);
         }
 
         public void Delete(int id)
@@ -32,9 +32,9 @@ namespace Business
             repository.Delete(id);
         }
 
-        public async void CreateAsync(T entity)
+        public void Create(T entity)
         {
-            repository.CreateAsync(entity);
+            repository.Create(entity);
         }
 
         public void Update(T entity)

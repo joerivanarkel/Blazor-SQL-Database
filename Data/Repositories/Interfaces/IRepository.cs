@@ -7,10 +7,10 @@ namespace Data.Repositories.Interfaces
 {
     public interface IRepository<T> where T: class
     {
-        void CreateAsync(T entity);
+        void Create(T entity);
         void Delete(int id);
-        Task<IAsyncEnumerable<T>> GetAll();
-        Task<T> GetByIdAsync(int id);
+        IEnumerable<T> GetAll();
+        T GetById(int id);
         void Update(T entity);
     }
 }

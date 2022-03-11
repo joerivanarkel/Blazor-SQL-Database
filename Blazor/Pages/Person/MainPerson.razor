@@ -66,5 +66,14 @@ else
     {
         persons = await PersonServiceUI.GetAsync();
         person.Add(persons.First());
+
+        var timer = new System.Threading.Timer((_) =>
+        {
+            InvokeAsync(async () =>
+            {
+                persons = await PersonServiceUI.GetAsync();
+                    StateHasChanged();
+                 });
+        }, null, 0, 10000);
     }
 }

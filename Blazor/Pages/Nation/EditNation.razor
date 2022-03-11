@@ -86,7 +86,6 @@ else
     private Nation nation = new Nation();
     private int _parsedId;
 
-    private IEnumerable<Nation>? nations;
     private IEnumerable<City>? cities;
     private IEnumerable<Person>? persons;
 
@@ -94,7 +93,6 @@ else
     {
         _parsedId = int.Parse(id);
         nation = await NationServiceUI.GetByIdAsync(_parsedId);
-        nations = await NationServiceUI.GetAsync();
         cities = await CityServiceUI.GetCitiesAsync();
         persons = await PersonServiceUI.GetAsync();
     }

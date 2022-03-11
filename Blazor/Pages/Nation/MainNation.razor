@@ -65,5 +65,14 @@ else
     {
         nations = await NationServiceUI.GetAsync();
         nation.Add(nations.First());
+
+        var timer = new System.Threading.Timer((_) =>
+        {
+            InvokeAsync(async () =>
+            {
+                nations = await NationServiceUI.GetAsync();
+                    StateHasChanged();
+                 });
+        }, null, 0, 10000);
     }
 }

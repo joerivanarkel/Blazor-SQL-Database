@@ -62,5 +62,14 @@ else
     {
         regions = await RegionServiceUI.GetAsync();
         region.Add(regions.First());
+
+        var timer = new System.Threading.Timer((_) =>
+        {
+            InvokeAsync(async () =>
+            {
+                regions = await RegionServiceUI.GetAsync();
+                    StateHasChanged();
+                 });
+        }, null, 0, 10000);
     }
 }

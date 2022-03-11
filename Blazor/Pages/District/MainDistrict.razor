@@ -61,5 +61,14 @@ else
     {
         districts = await DistrictServiceUI.GetAsync();
         district.Add(districts.First());
+
+        var timer = new System.Threading.Timer((_) =>
+        {
+            InvokeAsync(async () =>
+            {
+                districts = await DistrictServiceUI.GetAsync();
+                    StateHasChanged();
+                 });
+        }, null, 0, 10000);
     }
 }

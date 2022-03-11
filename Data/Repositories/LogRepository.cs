@@ -12,9 +12,9 @@ namespace Data.Repositories
             return database.Logs.Where( x => x.Id > id);
         }
 
-        public async override Task<IAsyncEnumerable<Log>> GetAll()
+        public override IEnumerable<Log> GetAll()
         { 
-            return database.Logs.AsAsyncEnumerable();
+            return database.Logs.AsEnumerable();
         }
     }
 }

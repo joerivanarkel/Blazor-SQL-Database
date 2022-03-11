@@ -58,5 +58,14 @@ else
     {
         cities = await CityServiceUI.GetCitiesAsync();
         city.Add(cities.First());
+
+        var timer = new System.Threading.Timer((_) =>
+        {
+            InvokeAsync(async () =>
+            {
+                cities = await CityServiceUI.GetCitiesAsync();
+                    StateHasChanged();
+                 });
+        }, null, 0, 10000);
     }
 }

@@ -12,20 +12,23 @@ namespace Data.Repositories
     {
         public CityRepository(Database database) : base(database) { }
 
-        public async override void CreateAsync(City city)
+        public override void Create(City city)
         {
             if (city.CityRuler != null)
             {
                 var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == city.CityRuler.FirstName);
-                var attachedPerson = database.Entry(existingPerson);
-                attachedPerson.CurrentValues.SetValues(city.CityRuler);
-                city.CityRuler = attachedPerson.Entity;
+                if (existingPerson != null)
+                {
+                    var attachedPerson = database.Entry(existingPerson);
+                    attachedPerson.CurrentValues.SetValues(city.CityRuler);
+                    city.CityRuler = attachedPerson.Entity;
+                }  
             }
             database.Cities.Add(city);
             database.SaveChanges();
         }
 
-        public async override Task<City> GetByIdAsync(int id)
+        public override City GetById(int id)
         {
             return database.Cities.Include( x => x.CityRuler).FirstOrDefault( b => b.Id == id);
         }

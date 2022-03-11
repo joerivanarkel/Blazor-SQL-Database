@@ -20,30 +20,30 @@ namespace API.Controllers
             // _logger= logger;
         }
         [HttpGet]
-        public Task<ActionResult<IEnumerable<T>>> GetAll()
+        public IEnumerable<T> GetAll()
         {
             // for (int i = 0; i < 1000; i++)
             // {
             //     Serilog.Log.Logger.Information("getting all the cities");
             //     Serilog.Log.CloseAndFlush();
             // }
-            return Ok(_baseService.GetAll());
+            return _baseService.GetAll();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<T>> GetById(int id)
+        public T GetById(int id)
         {
-            return Ok(_baseService.GetByIdAsync(id));
+            return _baseService.GetById(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAsync( [FromBody] T entity)
+        public void Create( [FromBody] T entity)
         {
             if (entity.IsValid())
             {
-                Ok(_baseService.CreateAsync(entity));
+                _baseService.Create(entity);
             }
-            els
+            else
             {
                 // HTTP error
             }        

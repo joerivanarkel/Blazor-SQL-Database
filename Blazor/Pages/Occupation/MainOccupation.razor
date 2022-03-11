@@ -63,5 +63,14 @@ else
     {
         occupations = await OccupationServiceUI.GetAsync();
         occupation.Add(occupations.First());
+
+        var timer = new System.Threading.Timer((_) =>
+        {
+            InvokeAsync(async () =>
+            {
+                occupations = await OccupationServiceUI.GetAsync();
+                    StateHasChanged();
+                 });
+        }, null, 0, 10000);
     }
 }

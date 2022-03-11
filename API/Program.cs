@@ -10,6 +10,7 @@ using Serilog.Sinks.MSSqlServer;
 using System.Data;
 using Business.Interfaces;
 using Data.Repositories.Interfaces;
+using Process;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,31 +57,6 @@ Log.Logger = new LoggerConfiguration()
         columnOptions: columnOpts
     ).CreateLogger();
 
-// var configuration = new ConfigurationBuilder()
-//            .SetBasePath(Directory.GetCurrentDirectory())
-//            .AddJsonFile("appsettings.json")
-//            .Build();
-
-// var logConfig = new LoggerConfiguration();
-// logConfig.ReadFrom.Configuration(configuration);
-// Log.Logger = logConfig.CreateLogger();
-// var logDB = DatabaseConnection.Get();
-// var sinkOpts = new MSSqlServerSinkOptions();
-// sinkOpts.TableName = "Logs";
-// sinkOpts.AutoCreateSqlTable = true;
-// var columnOpts = new ColumnOptions();
-// columnOpts.Store.Remove(StandardColumn.Properties);
-// columnOpts.Store.Add(StandardColumn.LogEvent);
-// columnOpts.LogEvent.DataLength = 2048;
-// columnOpts.TimeStamp.NonClusteredIndex = true;
-
-// Log.Logger = new LoggerConfiguration()
-//     .WriteTo.MSSqlServer(
-//         connectionString: logDB,
-//         sinkOptions: sinkOpts,
-//         columnOptions: columnOpts
-//     ).CreateLogger();
-
 Log.Logger.Debug("werkt het noe");
 
 
@@ -94,12 +70,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
-
 app.ConfigureExceptionHandler();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+var serviceProvider = builder.Services.BuildServiceProvider();
+
+var cityService = serviceProvider.GetService<ICityService>();
+var personService = serviceProvider.GetService<IPersonService>();
+var nationService = serviceProvider.GetService<INationService>();
+var occupationService = serviceProvider.GetService<IOccupationService>();
+var districtService = serviceProvider.GetService<IDistrictService>();
+var regionService = serviceProvider.GetService<IRegionService>();
+Starter starter = new Starter(cityService, personService, nationService, occupationService, districtService, regionService);
+starter.Start();
 
 app.Run();

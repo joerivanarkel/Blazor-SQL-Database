@@ -89,14 +89,12 @@ else
     private int _parsedId;
 
     private IEnumerable<Occupation>? occupations;
-    private IEnumerable<Person>? persons;
 
     protected override async Task OnInitializedAsync()
     {
         _parsedId = int.Parse(id);
         person = await PersonServiceUI.GetByIdAsync(_parsedId);
         occupations = await OccupationServiceUI.GetAsync();
-        persons = await PersonServiceUI.GetAsync();
     }
     private void Update(Person person)
     {

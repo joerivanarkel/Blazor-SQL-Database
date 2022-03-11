@@ -10,7 +10,7 @@
 
 <h1>Update Occupation</h1>
 
-@if (occupations == null)
+@if (occupation == null)
 {
         <p><em>Loading...</em></p>
 }
@@ -44,14 +44,12 @@ else
     [Parameter]
     public string id { get; set; }
     private Occupation occupation = new Occupation();
-    private IEnumerable<Occupation>? occupations;
     private int _parsedId;
 
     protected override async Task OnInitializedAsync()
     {
         _parsedId = int.Parse(id);
         occupation = await OccupationServiceUI.GetByIdAsync(_parsedId);
-        occupations = await OccupationServiceUI.GetAsync();
     }
 
     private void Update(Occupation occupation)

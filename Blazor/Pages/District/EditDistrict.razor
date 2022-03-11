@@ -10,7 +10,7 @@
 
 <h1>Edit District</h1>
 
-@if (districts == null)
+@if (district == null)
 {
         <p><em>Loading...</em></p>
 }
@@ -45,8 +45,6 @@ else
     public string id { get; set; }
     private District district = new District();
     private int _parsedId;
-    
-    private IEnumerable<District>? districts;
 
     protected override async Task OnInitializedAsync()
     {
