@@ -13,19 +13,32 @@ namespace Process
     
     {
         private ICityService _cityService;
+        private IExistingCityService _existingCityService;
 
-        public CityProcess(ICityService cityService)
+        public CityProcess(ICityService cityService, IExistingCityService existingCityService)
         {
             _cityService = cityService;
+            _existingCityService = existingCityService;
         }
 
         protected override void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             _cityService.Create(new City()
             {
-                Name = RandomString(),
+                Name = RandomCityName(),
                 Population = RamdomInt()
             });
+        }
+
+        private string RandomCityName()
+        {
+            var citynames = _existingCityService.GetAll();
+            var found = citynames.FirstOrDefault( x => x.Id == RamdomInt(1, citynames.Count()));
+            if (found != null)
+            {
+                return found.Name;
+            }
+            return "cityname";
         }
     }
 }

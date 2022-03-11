@@ -7,4 +7,6 @@ namespace Business;
 public class CityService : BaseService<City>, ICityService
 {
     public CityService(ICityRepository cityRepository): base(cityRepository){}
+
+    
 }

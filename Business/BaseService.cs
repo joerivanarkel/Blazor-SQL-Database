@@ -41,5 +41,10 @@ namespace Business
         {
             repository.Update(entity);
         }
+
+        public void NewDbContext()
+        {
+            repository.NewDbContext();
+        }
     }
 }

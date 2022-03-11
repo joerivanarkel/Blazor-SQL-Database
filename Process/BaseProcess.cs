@@ -33,10 +33,10 @@ namespace Process
             return name;
         }
 
-        protected int RamdomInt()
+        protected int RamdomInt(int firstInt = 0, int secondInt = 1000)
         {
             Random random = new Random();
-            return random.Next(10000);
+            return random.Next(firstInt, secondInt);
         }
 
         protected T RandomEnum<T>()

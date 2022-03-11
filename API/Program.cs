@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Database
-builder.Services.AddDbContext<Database>();
+builder.Services.AddDbContext<Database>(ServiceLifetime.Transient);
 // Repository
 builder.Services.AddTransient<ICityRepository, CityRepository>();
 builder.Services.AddTransient<IDistrictRepository, DistrictRepository>();
@@ -31,6 +31,7 @@ builder.Services.AddTransient<IOccupationRepository, OccupationRepository>();
 builder.Services.AddTransient<IPersonRepository, PersonRepository>();
 builder.Services.AddTransient<IRegionRepository, RegionRepository>();
 builder.Services.AddTransient<ILogRepository, LogRepository>();
+builder.Services.AddTransient<IExistingCityRepository, ExistingCityRepository>();
 
 // Services
 builder.Services.AddTransient<ICityService, CityService>();
@@ -40,6 +41,7 @@ builder.Services.AddTransient<IOccupationService, OccupationService>();
 builder.Services.AddTransient<IPersonService, PersonService>();
 builder.Services.AddTransient<IRegionService, RegionService>();
 builder.Services.AddTransient<ILogService, LogService>();
+builder.Services.AddTransient<IExistingCityService, ExistingCityService>();
 
 var sinkOpts = new MSSqlServerSinkOptions();
 sinkOpts.TableName = "Logs";
@@ -78,13 +80,14 @@ app.MapControllers();
 
 var serviceProvider = builder.Services.BuildServiceProvider();
 
-var cityService = serviceProvider.GetService<ICityService>();
-var personService = serviceProvider.GetService<IPersonService>();
-var nationService = serviceProvider.GetService<INationService>();
-var occupationService = serviceProvider.GetService<IOccupationService>();
-var districtService = serviceProvider.GetService<IDistrictService>();
-var regionService = serviceProvider.GetService<IRegionService>();
-Starter starter = new Starter(cityService, personService, nationService, occupationService, districtService, regionService);
+// var cityService = serviceProvider.GetService<ICityService>();
+// var personService = serviceProvider.GetService<IPersonService>();
+// var nationService = serviceProvider.GetService<INationService>();
+// var occupationService = serviceProvider.GetService<IOccupationService>();
+// var districtService = serviceProvider.GetService<IDistrictService>();
+// var regionService = serviceProvider.GetService<IRegionService>();
+// var existingCityService = serviceProvider.GetService<IExistingCityService>();
+Starter starter = new Starter();//cityService, personService, nationService, occupationService, districtService, regionService, existingCityService);
 starter.Start();
 
 app.Run();

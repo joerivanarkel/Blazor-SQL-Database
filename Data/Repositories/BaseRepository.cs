@@ -45,5 +45,10 @@ namespace Data.Repositories
             database.Set<T>().Update(entity);
             database.SaveChanges();
         }
+
+        public void NewDbContext()
+        {
+            database = new Database();
+        }
     }
 }

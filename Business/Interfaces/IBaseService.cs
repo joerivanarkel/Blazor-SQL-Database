@@ -7,5 +7,6 @@ namespace Business.Interfaces
         IEnumerable<T> GetAll();
         T GetById(int id);
         void Update(T entity);
+        void NewDbContext();
     }
 }
