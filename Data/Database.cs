@@ -17,6 +17,8 @@ namespace Data
 
         public DbSet<Log> Logs { get; set; }
 
+        public DbSet<ExistingCity> ExistingCities { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(DatabaseConnection.Get());

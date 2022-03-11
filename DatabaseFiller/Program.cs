@@ -2,12 +2,14 @@
 
 
 using Data;
-FillOccupation();
+using Common.Models;
+//FillOccupation();
 // FillRegion();
 // FillNation();
 // FillDistrict();
 // FillCity();
-FillPerson();
+//FillPerson();
+FillCities();
 
 Console.WriteLine("Success");
 Console.ReadLine();
@@ -82,3 +84,20 @@ void FillCity()
     database.Cities.Add(city);
     database.SaveChanges();
 }  
+
+void FillCities()
+{
+    var cities = new List<ExistingCity>();
+    var dir = Directory.GetCurrentDirectory();
+    var location = dir + "//cities.csv";
+    var values = File.ReadAllLines(location);
+    var splitted = values[0].ToString().Split(',');
+
+    foreach (var item in splitted)
+    {
+        cities.Add(new ExistingCity(){ Name = item.Trim()});
+    }
+    var database = new Database();
+    database.ExistingCities.AddRange(cities);
+    database.SaveChanges();
+}
