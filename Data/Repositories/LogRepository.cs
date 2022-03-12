@@ -9,6 +9,10 @@ namespace Data.Repositories
 
         public IEnumerable<Log> BiggerThen(int id)
         {
+            if(id == 0)
+            {
+                return database.Logs.OrderByDescending( x => x.Id).Take(10);
+            }
             return database.Logs.Where( x => x.Id > id);
         }
 

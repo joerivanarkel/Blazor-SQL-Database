@@ -48,7 +48,7 @@ namespace Process
 
         protected bool RandomBool()
         {
-            Random random = new Random();
+            var random = new Random();
             var randomBool = random.Next(1, 2);
             return Convert.ToBoolean(randomBool);
         }

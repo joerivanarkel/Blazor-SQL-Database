@@ -7,6 +7,6 @@ namespace API.Controllers
 {
     public class DistrictController : BaseController<District>
     {
-        public DistrictController(IDistrictService districtService) : base(districtService) { }
+        public DistrictController(IDistrictService districtService, Serilog.ILogger logger) : base(districtService) { }
     }
 }

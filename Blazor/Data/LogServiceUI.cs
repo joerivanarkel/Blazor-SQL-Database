@@ -19,5 +19,10 @@ namespace Blazor.Data
         public async Task<Log> GetByIdAsync(int id) =>
             await _httpClient.GetFromJsonAsync<Log>($"Log/{id}");
 
+        public async Task<List<Log>> BiggerThen(int id) =>
+            await _httpClient.GetFromJsonAsync<List<Log>>($"Log/BiggerThen/{id}");
+
+            
+
     }
 }

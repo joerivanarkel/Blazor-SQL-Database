@@ -6,5 +6,6 @@ namespace Blazor.Data
     {
         Task<List<Log>> GetAsync();
         Task<Log> GetByIdAsync(int id);
+        Task<List<Log>> BiggerThen(int id);
     }
 }

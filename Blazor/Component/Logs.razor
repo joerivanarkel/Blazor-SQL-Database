@@ -1,27 +1,46 @@
 @using Blazor.Data
 @using Data.Models
 @using System.Collections
+@using System.Linq
 @inject ILogServiceUI LogServiceUI
 
 
-<h1>Logging</h1>
-<table>
 
-    @if (AllLogs != null)
-    {
-        @foreach (var item in AllLogs)
-        {
-            <tr>
-                <td>@item.Message</td>
-            </tr>
-        }
-    }
-</table>
+
+<style>
+.rz-accordion-content { background-color: black; color: white; font-size: x-small;}
+.rz-accordion-content table tr td { padding-right:20px;}
+</style>
+<div class="row px-3" style="min-height: 200px;">
+    <div class="logger" >
+        <RadzenCard>
+            <RadzenAccordion >
+                <Items>
+                    <RadzenAccordionItem Text="Logs" Icon="account_balance_wallet">
+                        <table>
+
+                            @if (AllLogs != null)
+                            {
+                                @foreach (var item in AllLogs)
+                                {
+                                    <tr>
+                                        <td>@item.TimeStamp</td><td>@item.Message</td>
+                                    </tr>
+                                }
+                            }
+                        </table> 
+                    </RadzenAccordionItem>
+                </Items>
+            </RadzenAccordion>
+        </RadzenCard>
+    </div>
+</div>
 
 
 @code
 {
-    private int counter = 0;
+    private int LastId = 0;
+    //private IQueryable<Log> AllLogs; // = new IQueryable<Log>();
     private List<Log> AllLogs = new List<Log>();
     protected override async Task OnInitializedAsync()
     {
@@ -29,15 +48,23 @@
         {
 
             InvokeAsync(async () =>
-    {
-    AllLogs = await GetLogs();
-    StateHasChanged();
+            {
+                var newLogs = await GetLogs();
+                var iqueryableLogs = newLogs.AsQueryable<Log>();
+                foreach (var log in newLogs)
+                {
+                    AllLogs.Insert(0, log);
+                }
+                StateHasChanged();
             }); 
         }, null, 0, 10000);
     }
 
     private async Task<List<Log>> GetLogs()
     {
-        return await LogServiceUI.GetAsync();
+          var logs =  await LogServiceUI.BiggerThen(LastId);
+          LastId = logs.Last().Id;
+          return logs;
+
     }
 }

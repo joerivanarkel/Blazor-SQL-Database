@@ -8,28 +8,17 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class LogController : ControllerBase
+    public class LogController : BaseController<Common.Models.Log>
     {
         private ILogService _logService;
-        private ILogger<LogController> _logger;
+        //private ILogger<LogController> _logger;
         
-        public LogController(ILogService logService, ILogger<LogController> logger)
+        public LogController(ILogService logService): base(logService)
         {
             _logService = logService;
-            _logger= logger;
-        }
-        [HttpGet]
-        public IEnumerable<Common.Models.Log> GetAll()
-        {
-            for (int i = 0; i < 1000; i++)
-            {
-            Serilog.Log.Logger.Debug("getting all the logs");
-            Serilog.Log.CloseAndFlush();
-            }
-            return _logService.GetAll();
         }
 
-        [HttpGet("{id}", Name = "BiggerThen")]
+        [HttpGet("BiggerThen/{id}")]
         public IEnumerable<Common.Models.Log> BiggerThen(int id)
         {
             return _logService.BiggerThen(id);

@@ -10,5 +10,6 @@ namespace Data.Repositories
     public class DistrictRepository : BaseRepository<District>, IDistrictRepository
     {
         public DistrictRepository(Database database) : base(database){}
+
     }
 }

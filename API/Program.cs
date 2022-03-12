@@ -11,6 +11,7 @@ using System.Data;
 using Business.Interfaces;
 using Data.Repositories.Interfaces;
 using Process;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,9 @@ builder.Services.AddTransient<IRegionService, RegionService>();
 builder.Services.AddTransient<ILogService, LogService>();
 builder.Services.AddTransient<IExistingCityService, ExistingCityService>();
 
+// add serilog
+builder.Host.UseSerilog();
+
 var sinkOpts = new MSSqlServerSinkOptions();
 sinkOpts.TableName = "Logs";
 sinkOpts.AutoCreateSqlTable = true;
@@ -53,6 +57,9 @@ columnOpts.LogEvent.DataLength = 2048;
 columnOpts.TimeStamp.NonClusteredIndex = true;
 
 Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning) 
     .WriteTo.MSSqlServer(
         connectionString: DatabaseConnection.Get(),
         sinkOptions: sinkOpts,

@@ -1,8 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Business.Interfaces;
 using System.Timers;
 using Common.Models;
@@ -32,7 +27,7 @@ namespace Process
 
         private string RandomCityName()
         {
-            var citynames = _existingCityService.GetAll();
+            var citynames = _existingCityService.GetAll().ToList();
             var found = citynames.FirstOrDefault( x => x.Id == RamdomInt(1, citynames.Count()));
             if (found != null)
             {

@@ -12,28 +12,43 @@ namespace API.Controllers
         where T : Entity
     {
         private IBaseService<T> _baseService;
-        // private ILogger<CityController> _logger;
 
         public BaseController(IBaseService<T> baseService)
         {
             _baseService = baseService;
-            // _logger= logger;
         }
         [HttpGet]
         public IEnumerable<T> GetAll()
         {
-            // for (int i = 0; i < 1000; i++)
-            // {
-            //     Serilog.Log.Logger.Information("getting all the cities");
-            //     Serilog.Log.CloseAndFlush();
-            // }
-            return _baseService.GetAll();
+            IEnumerable<T> all = null;
+            try
+            {
+                Serilog.Log.Debug("Getting all: " + typeof(T).Name);
+                all = _baseService.GetAll();
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Debug("Exception during getting Getting all: " + typeof(T).Name);
+                Serilog.Log.Error(exception.InnerException?.ToString());
+            }
+            return all;
         }
 
         [HttpGet("{id}")]
         public T GetById(int id)
         {
-            return _baseService.GetById(id);
+            T found = null;
+            try
+            {
+                Serilog.Log.Debug("Start finding:" +  typeof(T).Name + " with id:"+ id.ToString());
+                found =  _baseService.GetById(id);
+            }
+            catch (System.Exception exception)
+            {
+               Serilog.Log.Debug("Error finding:" +  typeof(T).Name + " with id:"+ id.ToString() +" Error:" + exception.InnerException?.ToString());
+            }
+            return found;
+
         }
 
         [HttpPost]
