@@ -8,7 +8,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BaseController<T> : ControllerBase 
+    public class BaseController<T> : ControllerBase
         where T : Entity
     {
         private IBaseService<T> _baseService;
@@ -28,8 +28,7 @@ namespace API.Controllers
             }
             catch (System.Exception exception)
             {
-                Serilog.Log.Debug("Exception during getting Getting all: " + typeof(T).Name);
-                Serilog.Log.Error(exception.InnerException?.ToString());
+                Serilog.Log.Error(exception, "Exception during getting Getting all: " + typeof(T).Name);
             }
             return all;
         }
@@ -40,40 +39,65 @@ namespace API.Controllers
             T found = null;
             try
             {
-                Serilog.Log.Debug("Start finding:" +  typeof(T).Name + " with id:"+ id.ToString());
-                found =  _baseService.GetById(id);
+                Serilog.Log.Debug("Start finding:" + typeof(T).Name + " with id:" + id.ToString());
+                found = _baseService.GetById(id);
             }
             catch (System.Exception exception)
             {
-               Serilog.Log.Debug("Error finding:" +  typeof(T).Name + " with id:"+ id.ToString() +" Error:" + exception.InnerException?.ToString());
+                Serilog.Log.Error(exception, "Error finding:" + typeof(T).Name + " with id:" + id.ToString() + " Error:" + exception.InnerException?.ToString());
             }
             return found;
 
         }
 
         [HttpPost]
-        public void Create( [FromBody] T entity)
+        public void Create([FromBody] T entity)
         {
-            if (entity.IsValid())
+            try
             {
-                _baseService.Create(entity);
+                if (entity.IsValid())
+                {
+                    _baseService.Create(entity);
+                }
+                else
+                {
+                    // HTTP error
+                }
             }
-            else
+            catch (System.Exception exception)
             {
-                // HTTP error
-            }        
+
+                Serilog.Log.Error(exception, "Error during saving, " + typeof(T).Name);
+            }
+
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _baseService.Delete(id);
+            try
+            {
+                _baseService.Delete(id);
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, "Error during deleting, " + typeof(T).Name);
+            }
+
         }
 
         [HttpPut]
         public void Update(T entity)
         {
-            _baseService.Update(entity);
+            try
+            {
+                _baseService.Update(entity);
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, "Error during updating, " + typeof(T).Name);
+            }
+
         }
     }
 }

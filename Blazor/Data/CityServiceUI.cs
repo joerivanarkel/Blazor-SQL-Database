@@ -13,19 +13,70 @@ namespace Blazor.Data
         public CityServiceUI(HttpClient httpClient) =>
            _httpClient = httpClient;
 
-        public async Task<IEnumerable<City>> GetCitiesAsync() =>
-            await _httpClient.GetFromJsonAsync<IEnumerable<City>>("City");
+        public async Task<IEnumerable<City>> GetCitiesAsync()
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<IEnumerable<City>>("City");
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, "Exception during getting Getting cities");
+            }
+            return null;
+        }
 
-        public async Task<City> GetByIdAsync(int id) =>
-            await _httpClient.GetFromJsonAsync<City>($"City/{id}");
 
-        public async Task CreateAsync(City city) =>
-            await _httpClient.PostAsJsonAsync<City>("City", city);
+        public async Task<City> GetByIdAsync(int id){
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<City>($"City/{id}");
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, $"Exception during getting city, with id: { id }");
+            }
+            return null;
+        }
+            
 
-        public async Task DeleteAsync(int id) =>
-            await _httpClient.DeleteAsync($"City/{id}");
+        public async Task CreateAsync(City city)
+        {
+            try
+            {
+                await _httpClient.PostAsJsonAsync<City>("City", city);
+            }
+            catch (System.Exception exception)
+            {
+               Serilog.Log.Error(exception, $"Exception during creating city");
+            }
+        }
+            
 
-        public async Task UpdateAsync(City city) =>
-            await _httpClient.PutAsJsonAsync<City>("City", city);
+        public async Task DeleteAsync(int id) 
+        {
+            try
+            {
+                await _httpClient.DeleteAsync($"City/{id}");
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, $"Exception during deleting city, with id: { id }");
+            }
+        }
+            
+
+        public async Task UpdateAsync(City city) 
+        {
+            try
+            {
+                await _httpClient.PutAsJsonAsync<City>("City", city);
+            }
+            catch (System.Exception exception)
+            {
+                 Serilog.Log.Error(exception, $"Exception during updating city");
+            }
+        }
+            
     }
 }

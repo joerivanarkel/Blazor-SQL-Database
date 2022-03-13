@@ -13,14 +13,47 @@ namespace Blazor.Data
         public LogServiceUI(HttpClient httpClient) =>
            _httpClient = httpClient;
 
-        public async Task<List<Log>> GetAsync() =>
-            await _httpClient.GetFromJsonAsync<List<Log>>("Log");
+        public async Task<List<Log>> GetAsync() 
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<Log>>("Log");
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, "Exception during getting Getting logs");
+            }
+            return null;
+        }
+            
 
-        public async Task<Log> GetByIdAsync(int id) =>
-            await _httpClient.GetFromJsonAsync<Log>($"Log/{id}");
+        public async Task<Log> GetByIdAsync(int id) 
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<Log>($"Log/{id}");
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, $"Exception during getting log, with id: { id }");
+            }
+            return null;
+        }
+            
 
-        public async Task<List<Log>> BiggerThen(int id) =>
-            await _httpClient.GetFromJsonAsync<List<Log>>($"Log/BiggerThen/{id}");
+        public async Task<List<Log>> BiggerThen(int id) 
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<Log>>($"Log/BiggerThen/{id}"); 
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, $"Exception during getting log, bigger then: { id }");
+            }
+            return null;
+        }
+            
 
             
 

@@ -1,17 +1,15 @@
-using API;
 using Business;
 using Data;
 using Data.Repositories;
 using GlobalErrorHandling.Extensions;
 using Common;
 using Serilog;
-using System.Collections.ObjectModel;
+using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
-using System.Data;
 using Business.Interfaces;
 using Data.Repositories.Interfaces;
 using Process;
-using Serilog.Events;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,13 +64,8 @@ Log.Logger = new LoggerConfiguration()
         columnOptions: columnOpts
     ).CreateLogger();
 
-Log.Logger.Debug("werkt het noe");
-
-
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

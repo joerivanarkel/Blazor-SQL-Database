@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+using Blazor;
 using Blazor.Areas.Identity;
 using Blazor.Data;
 using Blazor.Data.Models;
@@ -5,6 +7,9 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,19 +38,43 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(_myConfig.Url) });
 
 // Add Service per Table
-builder.Services.AddTransient<ICityServiceUI, CityServiceUI>();
-builder.Services.AddTransient<IDistrictServiceUI, DistrictServiceUI>();
-builder.Services.AddTransient<INationServiceUI, NationServiceUI>();
-builder.Services.AddTransient<IOccupationServiceUI, OccupationServiceUI>();
-builder.Services.AddTransient<IPersonServiceUI, PersonServiceUI>();
-builder.Services.AddTransient<IRegionServiceUI, RegionServiceUI>();
-builder.Services.AddTransient<ILogServiceUI, LogServiceUI>();
+builder.Services.AddScoped<ICityServiceUI, CityServiceUI>();
+builder.Services.AddScoped<IDistrictServiceUI, DistrictServiceUI>();
+builder.Services.AddScoped<INationServiceUI, NationServiceUI>();
+builder.Services.AddScoped<IOccupationServiceUI, OccupationServiceUI>();
+builder.Services.AddScoped<IPersonServiceUI, PersonServiceUI>();
+builder.Services.AddScoped<IRegionServiceUI, RegionServiceUI>();
+builder.Services.AddScoped<ILogServiceUI, LogServiceUI>();
 
 // Radzen
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TooltipService>();
 builder.Services.AddScoped<ContextMenuService>();
+
+// add serilog
+builder.Host.UseSerilog();
+
+var sinkOpts = new MSSqlServerSinkOptions();
+sinkOpts.TableName = "Logs";
+sinkOpts.AutoCreateSqlTable = true;
+var columnOpts = new ColumnOptions();
+columnOpts.Store.Remove(StandardColumn.Properties);
+columnOpts.Store.Add(StandardColumn.LogEvent);
+columnOpts.LogEvent.DataLength = 2048;
+columnOpts.TimeStamp.NonClusteredIndex = true;
+
+Serilog.Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning) 
+    .WriteTo.MSSqlServer(
+        connectionString: DatabaseConnection.Get(),
+        sinkOptions: sinkOpts,
+        columnOptions: columnOpts
+    ).CreateLogger();
+
+Serilog.Log.Debug("Doetie het nu ook in Blazor");
 
 var app = builder.Build();
 
