@@ -8,7 +8,6 @@ using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using Business.Interfaces;
 using Data.Repositories.Interfaces;
-using Process;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,17 +76,5 @@ app.ConfigureExceptionHandler();
 app.UseAuthorization();
 
 app.MapControllers();
-
-var serviceProvider = builder.Services.BuildServiceProvider();
-
-// var cityService = serviceProvider.GetService<ICityService>();
-// var personService = serviceProvider.GetService<IPersonService>();
-// var nationService = serviceProvider.GetService<INationService>();
-// var occupationService = serviceProvider.GetService<IOccupationService>();
-// var districtService = serviceProvider.GetService<IDistrictService>();
-// var regionService = serviceProvider.GetService<IRegionService>();
-// var existingCityService = serviceProvider.GetService<IExistingCityService>();
-Starter starter = new Starter();//cityService, personService, nationService, occupationService, districtService, regionService, existingCityService);
-starter.Start();
 
 app.Run();

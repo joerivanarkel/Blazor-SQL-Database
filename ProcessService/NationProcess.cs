@@ -6,7 +6,7 @@ using System.Timers;
 using Business.Interfaces;
 using Common.Models;
 
-namespace Process
+namespace ProcessService
 {
     public class NationProcess : BaseProcess
     {
@@ -19,12 +19,21 @@ namespace Process
 
         protected override void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            _nationService.Create(new Nation()
+            try
             {
-                Name = RandomString(),
-                Type = RandomEnum<Common.Models.Type>(),
-                Population = RamdomInt()
-            });
+                _nationService.Create(new Nation()
+                {
+                    Name = RandomString(),
+                    Type = RandomEnum<Common.Models.Type>(),
+                    Population = RamdomInt()
+                });
+            }
+            catch (System.Exception exception)
+            {
+
+                Serilog.Log.Error(exception, "Exception automatically during creating new nation");
+            }
+            
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Timers;
 using Business.Interfaces;
 using Common.Models;
 
-namespace Process
+namespace ProcessService
 {
     public class OccupationProcess : BaseProcess
     {
@@ -19,10 +19,18 @@ namespace Process
 
         protected override void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            _occupationService.Create(new Occupation()
+            try
             {
-                Name = RandomString()
-            });
+                _occupationService.Create(new Occupation()
+                {
+                    Name = RandomString()
+                });
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, "Exception automatically during creating new occupation");
+            }
+            
         }
     }
 }

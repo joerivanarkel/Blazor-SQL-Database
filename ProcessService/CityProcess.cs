@@ -1,8 +1,9 @@
 using Business.Interfaces;
 using System.Timers;
 using Common.Models;
+using Serilog;
 
-namespace Process
+namespace ProcessService
 {
     public class CityProcess : BaseProcess
     
@@ -18,11 +19,18 @@ namespace Process
 
         protected override void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            _cityService.Create(new City()
+            try
             {
-                Name = RandomCityName(),
-                Population = RamdomInt()
-            });
+                _cityService.Create(new City()
+                {
+                    Name = RandomCityName(),
+                    Population = RamdomInt()
+                });
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, "Exception automatically during creating new city");
+            }
         }
 
         private string RandomCityName()

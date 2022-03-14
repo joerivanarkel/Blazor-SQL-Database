@@ -3,7 +3,7 @@ using System.Timers;
 using Business.Interfaces;
 using Common.Models;
 
-namespace Process
+namespace ProcessService
 {
     public class RegionProcess : BaseProcess
     {
@@ -16,10 +16,17 @@ namespace Process
 
         protected override void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            _regionService.Create(new Region()
+            try
             {
-                Name = RandomString()
-            });
+                _regionService.Create(new Region()
+                {
+                    Name = RandomString()
+                });
+            }
+            catch (System.Exception exception)
+            {
+                Serilog.Log.Error(exception, "Exception automatically during creating new city");
+            }
         }
     }
 }

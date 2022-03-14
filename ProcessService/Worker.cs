@@ -1,11 +1,12 @@
-﻿using Business;
+using Business;
 using Business.Interfaces;
 using Data;
 using Data.Repositories;
 
-namespace Process;
-public class Starter
-{    
+namespace ProcessService;
+
+public class Worker : BackgroundService
+{
     private ICityService _cityService;
     private IPersonService _personService;
     private INationService _nationService;
@@ -13,18 +14,8 @@ public class Starter
     private IDistrictService _districtService;
     private IRegionService _regionService;
     private IExistingCityService _existingCityService;
-    // public Starter(ICityService cityService, IPersonService personService, INationService nationService, IOccupationService occupationService, IDistrictService districtService, IRegionService regionService, IExistingCityService existingCityService)
-    // {
-    //     _cityService = cityService;
-    //     _personService = personService;
-    //     _nationService = nationService;
-    //     _occupationService = occupationService;
-    //     _districtService = districtService;
-    //     _regionService = regionService;
-    //     _existingCityService = existingCityService;
-    // }
 
-    public Starter()
+    public Worker()
     {
         var database = new Database();
         _cityService = new CityService(new CityRepository(database));
@@ -44,11 +35,11 @@ public class Starter
         _occupationService.NewDbContext();
         _districtService.NewDbContext();
         _regionService.NewDbContext();
-
         _existingCityService.NewDbContext();
     }
 
-    public async Task Start()
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         StartDbContext();
         var cityProcess = new CityProcess(_cityService, _existingCityService);
@@ -58,10 +49,10 @@ public class Starter
         var districtProcess = new DistrictProcess(_districtService);
         var regionProcess = new RegionProcess(_regionService);
         cityProcess.Process();
-        // personProcess.Process();
-        // nationProcess.Process();
-        // occupationProcess.Process();
-        // districtProcess.Process();
-        // regionProcess.Process();
+        personProcess.Process();
+        nationProcess.Process();
+        occupationProcess.Process();
+        districtProcess.Process();
+        regionProcess.Process();
     }
 }

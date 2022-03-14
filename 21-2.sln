@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor", "Blazor\Blazor.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseFiller", "DatabaseFiller\DatabaseFiller.csproj", "{0CFE8812-3AC8-40EF-9E0A-EB808EF1D7BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Process", "Process\Process.csproj", "{7C57728F-1FD3-4E13-9F8A-80BC0844CD49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessService", "ProcessService\ProcessService.csproj", "{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,5 +54,9 @@ Global
 		{7C57728F-1FD3-4E13-9F8A-80BC0844CD49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C57728F-1FD3-4E13-9F8A-80BC0844CD49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C57728F-1FD3-4E13-9F8A-80BC0844CD49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

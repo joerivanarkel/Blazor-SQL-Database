@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using Common.Models;
 
-namespace Process
+namespace ProcessService
 {
     public class BaseProcess
     {
