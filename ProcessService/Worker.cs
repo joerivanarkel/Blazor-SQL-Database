@@ -2,6 +2,7 @@ using Business;
 using Business.Interfaces;
 using Data;
 using Data.Repositories;
+using ProcessService.ProcessClasses;
 
 namespace ProcessService;
 

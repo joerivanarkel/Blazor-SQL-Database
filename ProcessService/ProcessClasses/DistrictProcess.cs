@@ -2,7 +2,7 @@ using System.Timers;
 using Business.Interfaces;
 using Common.Models;
 
-namespace ProcessService
+namespace ProcessService.ProcessClasses
 {
     public class DistrictProcess : BaseProcess
     {

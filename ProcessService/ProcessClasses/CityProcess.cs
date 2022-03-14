@@ -3,7 +3,7 @@ using System.Timers;
 using Common.Models;
 using Serilog;
 
-namespace ProcessService
+namespace ProcessService.ProcessClasses
 {
     public class CityProcess : BaseProcess
     

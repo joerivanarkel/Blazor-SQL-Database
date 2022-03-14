@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
 using Business.Interfaces;
 using Common.Models;
 
-namespace ProcessService
+namespace ProcessService.ProcessClasses
 {
     public class NationProcess : BaseProcess
     {
