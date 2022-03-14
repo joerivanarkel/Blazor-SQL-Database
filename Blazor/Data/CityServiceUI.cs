@@ -21,13 +21,14 @@ namespace Blazor.Data
             }
             catch (System.Exception exception)
             {
-                Serilog.Log.Error(exception, "Exception during getting Getting cities");
+                Serilog.Log.Error(exception, "Exception during getting cities");
             }
             return null;
         }
 
 
-        public async Task<City> GetByIdAsync(int id){
+        public async Task<City> GetByIdAsync(int id)
+        {
             try
             {
                 return await _httpClient.GetFromJsonAsync<City>($"City/{id}");
@@ -74,7 +75,7 @@ namespace Blazor.Data
             }
             catch (System.Exception exception)
             {
-                 Serilog.Log.Error(exception, $"Exception during updating city");
+                Serilog.Log.Error(exception, $"Exception during updating city");
             }
         }
             
