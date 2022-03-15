@@ -36,7 +36,8 @@ namespace ProcessService.ProcessClasses
         private string RandomCityName()
         {
             var citynames = _existingCityService.GetAll().ToList();
-            var found = citynames.FirstOrDefault( x => x.Id == RamdomInt(1, citynames.Count()));
+            var citycount = citynames.Count() - 1;
+            var found = citynames.FirstOrDefault( x => x.Id == RamdomInt(1, citycount));
             if (found != null)
             {
                 return found.Name;
