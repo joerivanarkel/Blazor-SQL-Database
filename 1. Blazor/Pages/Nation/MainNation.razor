@@ -1,0 +1,78 @@
+﻿@page "/nation"
+
+<PageTitle>Nation Table</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject INationServiceUI NationServiceUI
+@inject NavigationManager NavManager
+
+<h1>Nation Table</h1>
+<RadzenButton Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click=@(() =>
+    NavManager.NavigateTo("/createnation")) Text="Create New" />
+
+@if (nations == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (nations.Count() == 0)
+    {
+        <p><em>No persons found</em></p>
+    }
+    else{
+
+    <RadzenDataGrid Data="@nations" TItem="Nation" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="Nation" Property="Name" Title="Name" />
+            <RadzenDataGridColumn TItem="Nation" Property="Type" Title="Type" />
+            <RadzenDataGridColumn TItem="Nation" Property="Population" Title="Population" />
+
+            <RadzenDataGridColumn TItem="Nation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                <Template Context="nation">
+                    <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() => EditClick(nation)) Text="Edit" />
+                </Template>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="Nation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                <Template Context="nation">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() => Delete(nation)) Text="Delete" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+    }
+
+}
+
+@code {
+    private IEnumerable<Data.Models.Nation>? nations;
+    private IList<Nation> nation = new List<Nation>();
+
+    private void EditClick(Nation nation)
+    {
+        var uri = "editnation/" + nation.Id;
+        NavManager.NavigateTo(uri);
+    }
+    private void Delete(Nation nation)
+    {
+        var uri = "deletenation/" + nation.Id;
+        NavManager.NavigateTo(uri);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        nations = await NationServiceUI.GetAsync();
+        nation.Add(nations.First());
+
+        var timer = new System.Threading.Timer((_) =>
+        {
+            InvokeAsync(async () =>
+            {
+                nations = await NationServiceUI.GetAsync();
+                    StateHasChanged();
+                 });
+        }, null, 0, 10000);
+    }
+}

@@ -1,0 +1,76 @@
+﻿@page "/occupation"
+
+<PageTitle>Occupation Table</PageTitle>
+
+@using Blazor.Data
+@using Data.Models
+@inject IOccupationServiceUI OccupationServiceUI
+@inject NavigationManager NavManager
+
+<h1>Occupation Table</h1>
+<RadzenButton Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click=@(() =>
+    NavManager.NavigateTo("/createoccupation")) Text="Create New" />
+
+@if (occupations == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (occupations.Count() == 0)
+    {
+        <p><em>No persons found</em></p>
+    }
+    else
+    {
+        <RadzenDataGrid Data="@occupations" TItem="Occupation" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="Occupation" Property="Name" Title="Name" />
+
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Edit" Sortable="false" Filterable="false">
+                    <Template Context="occupation">
+                        <RadzenButton ButtonStyle="ButtonStyle.Warning" Class="m-1" Click=@(() => EditClick(occupation)) Text="Edit" />
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Occupation" Width="160px" Title="Delete" Sortable="false" Filterable="false">
+                    <Template Context="occupation">
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Class="m-1" Click=@(() => Delete(occupation)) Text="Delete" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
+
+}
+
+@code {
+    private IEnumerable<Data.Models.Occupation>? occupations;
+    private IList<Occupation> occupation = new List<Occupation>();
+
+    private void EditClick(Occupation occupation)
+    {
+        var uri = "editoccupation/" + occupation.Id;
+        NavManager.NavigateTo(uri);
+    }
+    private void Delete(Occupation occupation)
+    {
+        var uri = "deleteoccupation/" + occupation.Id;
+        NavManager.NavigateTo(uri);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        occupations = await OccupationServiceUI.GetAsync();
+        occupation.Add(occupations.First());
+
+        var timer = new System.Threading.Timer((_) =>
+        {
+            InvokeAsync(async () =>
+            {
+                occupations = await OccupationServiceUI.GetAsync();
+                    StateHasChanged();
+                 });
+        }, null, 0, 10000);
+    }
+}

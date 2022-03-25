@@ -2,28 +2,40 @@ name: .NET
 
 on:
   push:
-    branches: [ master, Reorganizing ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, Reorganizing ]
+    branches: [ master ]
 
 jobs:
-  build:
-
+  setup:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Insert Connectionstring
-      uses: jacobtomlinson/gha-find-replace@v2
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
       with:
-        find: "DatabaseConnection.Get()"
-        replace: ${{ secrets.CONNECTIONSTRING }}
-        regex: false
+        dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+      env:
+        connectionstring: ${{ secrets.CONNECTIONSTRING }}
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      env:
+        connectionstring: ${{ secrets.CONNECTIONSTRING }}

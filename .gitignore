@@ -454,5 +454,6 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 ## Link to database
-appsettings.json
 */Migrations/*
+8. ProcessService/appsettings.json
+dotnet-secrets-config.txt
