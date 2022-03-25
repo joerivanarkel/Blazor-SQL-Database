@@ -2,9 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: [ master, Reorganizing ]
+    branches: [ master, FillDatabaseProcess ]
   pull_request:
-    branches: [ master, Reorganizing ]
+    branches: [ master, FillDatabaseProcess ]
 
 jobs:
   build:
