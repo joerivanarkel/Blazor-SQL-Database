@@ -7,10 +7,8 @@ on:
     branches: [ master, FillDatabaseProcess ]
 
 jobs:
-  build:
-
+  setup:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
@@ -19,10 +17,18 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
     - name: Build
       run: dotnet build --no-restore
       env:
         connectionstring: ${{ secrets.CONNECTIONSTRING }}
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       env:
