@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{817ACE13-B702-4E10-8FE9-5DF19CB9B9E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "5. Common\Common.csproj", "{817ACE13-B702-4E10-8FE9-5DF19CB9B9E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{E0487939-9F7C-4AD3-8029-D9766CFEA4D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "3. Business\Business.csproj", "{E0487939-9F7C-4AD3-8029-D9766CFEA4D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{90F4DE25-A2B6-4A79-8EC4-5BF7D78C6791}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "4. Data\Data.csproj", "{90F4DE25-A2B6-4A79-8EC4-5BF7D78C6791}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{4D37F77B-E0FB-43E3-9C8F-EAACA07B3E8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "2. API\API.csproj", "{4D37F77B-E0FB-43E3-9C8F-EAACA07B3E8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor", "Blazor\Blazor.csproj", "{DDB13F18-6A4C-46D1-983E-1D32E9D8376E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor", "1. Blazor\Blazor.csproj", "{DDB13F18-6A4C-46D1-983E-1D32E9D8376E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseFiller", "DatabaseFiller\DatabaseFiller.csproj", "{0CFE8812-3AC8-40EF-9E0A-EB808EF1D7BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseFiller", "7. DatabaseFiller\DatabaseFiller.csproj", "{0CFE8812-3AC8-40EF-9E0A-EB808EF1D7BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessService", "ProcessService\ProcessService.csproj", "{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessService", "8. ProcessService\ProcessService.csproj", "{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{D943D749-6798-4CA9-8BF9-FCC28DE7C743}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "6. Test\Test.csproj", "{D943D749-6798-4CA9-8BF9-FCC28DE7C743}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
