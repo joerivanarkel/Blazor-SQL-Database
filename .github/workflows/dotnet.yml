@@ -23,3 +23,7 @@ jobs:
       run: dotnet build --no-restore
       env:
         connectionstring: ${{ secrets.CONNECTIONSTRING }}
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      env:
+        connectionstring: ${{ secrets.CONNECTIONSTRING }}
