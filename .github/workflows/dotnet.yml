@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
         find: "DatabaseConnection.Get()"
-        replace: ${{ secrets.GITHUB_TOKEN }}
+        replace: ${{ secrets.CONNECTIONSTRING }}
         regex: false
     - name: Restore dependencies
       run: dotnet restore
