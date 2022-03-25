@@ -12,20 +12,21 @@ namespace Data.Repositories
     {
         public PersonRepository(Database database) : base(database){}
 
-        public override void Create(Person person)
+        public override bool Create(Person person)
         {
-            if(person.Occupation != null)
-            {
-                var existingOccupation = database.Occupations.FirstOrDefault(a => a.Name == person.Occupation.Name);
-                if (existingOccupation != null)
+                if(person.Occupation != null)
                 {
-                    var attachedOccupation = database.Entry(existingOccupation);
-                    attachedOccupation.CurrentValues.SetValues(person.Occupation);
-                    person.Occupation = attachedOccupation.Entity;
+                    var existingOccupation = database.Occupations.FirstOrDefault(a => a.Name == person.Occupation.Name);
+                    if (existingOccupation != null)
+                    {
+                        var attachedOccupation = database.Entry(existingOccupation);
+                        attachedOccupation.CurrentValues.SetValues(person.Occupation);
+                        person.Occupation = attachedOccupation.Entity;
+                    }
                 }
-            }
-            database.Persons.Add(person);
-            database.SaveChanges();
+                database.Persons.Add(person);
+                database.SaveChanges();
+                return true;
         }
 
         public override Person GetById(int id)

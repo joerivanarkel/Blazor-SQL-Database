@@ -1,12 +1,14 @@
 using System.Security.Cryptography.X509Certificates;
 using Common;
 using Common.Models;
+using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Data
 {
-    public class Database : DbContext
+
+    public class Database : DbContext, IDatabase
     {
         public DbSet<City> Cities { get; set; }
         public DbSet<District> Districts { get; set; }
@@ -19,7 +21,6 @@ namespace Data
 
         public DbSet<ExistingCity> ExistingCities { get; set; }
 
-    
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(DatabaseConnection<Data.Database>.Get());
@@ -35,30 +36,30 @@ namespace Data
                 .HasOne(e => e.CityRuler)
                 .WithOne()
                 .HasForeignKey<Person>(b => b.CityId)
-                .OnDelete(DeleteBehavior.SetNull); 
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Nation>()
-                .HasOne( e => e.NationRuler)
+                .HasOne(e => e.NationRuler)
                 .WithOne()
-                .HasForeignKey<Person>( b => b.NationId)
+                .HasForeignKey<Person>(b => b.NationId)
                 .OnDelete(DeleteBehavior.SetNull);
-            
+
             modelBuilder.Entity<Nation>()
-                .HasOne( e=> e.NationCapital)
+                .HasOne(e => e.NationCapital)
                 .WithOne()
-                .HasForeignKey<City>( b=> b.NationId)
+                .HasForeignKey<City>(b => b.NationId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Region>()
-                .HasOne( b=> b.RegionCapital)
+                .HasOne(b => b.RegionCapital)
                 .WithOne()
                 .HasForeignKey<City>(b => b.RegionId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Person>()
-                .HasOne( b => b.Occupation)
+                .HasOne(b => b.Occupation)
                 .WithOne()
-                .HasForeignKey<Occupation>( b => b.PersonId)
+                .HasForeignKey<Occupation>(b => b.PersonId)
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }

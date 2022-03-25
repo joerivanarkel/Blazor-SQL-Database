@@ -12,30 +12,31 @@ namespace Data.Repositories
     {
         public NationRepository(Database database) : base(database){}
 
-        public override void Create(Nation nation)
+        public override bool Create(Nation nation)
         {
-            if (nation.NationRuler != null)
-            {
-                var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == nation.NationRuler.FirstName);
-                if (existingPerson != null)
+                if (nation.NationRuler != null)
                 {
-                    var attachedPerson = database.Entry(existingPerson);
-                    attachedPerson.CurrentValues.SetValues(nation.NationRuler);
-                    nation.NationRuler = attachedPerson.Entity;
+                    var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == nation.NationRuler.FirstName);
+                    if (existingPerson != null)
+                    {
+                        var attachedPerson = database.Entry(existingPerson);
+                        attachedPerson.CurrentValues.SetValues(nation.NationRuler);
+                        nation.NationRuler = attachedPerson.Entity;
+                    }
                 }
-            }
-            if (nation.NationCapital != null)
-            {
-                var existingCity = database.Cities.FirstOrDefault(x => x.Name == nation.NationCapital.Name);
-                if (existingCity != null)
+                if (nation.NationCapital != null)
                 {
-                    var attachedCity = database.Entry(existingCity);
-                    attachedCity.CurrentValues.SetValues(nation.NationCapital);
-                    nation.NationCapital = attachedCity.Entity;
+                    var existingCity = database.Cities.FirstOrDefault(x => x.Name == nation.NationCapital.Name);
+                    if (existingCity != null)
+                    {
+                        var attachedCity = database.Entry(existingCity);
+                        attachedCity.CurrentValues.SetValues(nation.NationCapital);
+                        nation.NationCapital = attachedCity.Entity;
+                    }
                 }
-            }
-            database.Nations.Add(nation);
-            database.SaveChanges();
+                database.Nations.Add(nation);
+                database.SaveChanges();
+                return true;            
         }
 
         public override Nation GetById(int id)

@@ -8,11 +8,11 @@ namespace Data.Repositories.Interfaces
 {
     public interface IRepository<T> where T: class
     {
-        void Create(T entity);
-        void Delete(int id);
+        bool Create(T entity);
+        bool Delete(int id);
         IEnumerable<T> GetAll();
         T GetById(int id);
-        void Update(T entity);
+        bool Update(T entity);
         void NewDbContext();
     }
 }

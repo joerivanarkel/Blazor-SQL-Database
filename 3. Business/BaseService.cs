@@ -27,19 +27,22 @@ namespace Business
             return repository.GetById(id);
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             repository.Delete(id);
+            return true;
         }
 
-        public void Create(T entity)
+        public bool Create(T entity)
         {
             repository.Create(entity);
+            return true;
         }
 
-        public void Update(T entity)
+        public bool Update(T entity)
         {
             repository.Update(entity);
+            return true;
         }
 
         public void NewDbContext()

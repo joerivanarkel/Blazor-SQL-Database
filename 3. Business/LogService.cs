@@ -3,7 +3,7 @@ using Business.Interfaces;
 using Data.Repositories.Interfaces;
 
 namespace Business;
-public class LogService :  ILogService
+public class LogService : ILogService
 {
     private ILogRepository _logRepository;
     public LogService(ILogRepository logRepository)
@@ -16,14 +16,14 @@ public class LogService :  ILogService
         return _logRepository.BiggerThen(id);
     }
 
-    public void Create(Log entity)
+    public bool Create(Log entity)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
-    public void Delete(int id)
+    public bool Delete(int id)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     public IEnumerable<Log> GetAll()
@@ -41,8 +41,8 @@ public class LogService :  ILogService
         throw new NotImplementedException();
     }
 
-    public void Update(Log entity)
+    public bool Update(Log entity)
     {
-        throw new NotImplementedException();
+        return false;
     }
 }

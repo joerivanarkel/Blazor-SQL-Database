@@ -10,12 +10,13 @@ namespace ProcessService.ProcessClasses
 {
     public class BaseProcess
     {
-        public async Task Process()
+        public async Task<bool> Process()
         {
             var timer = new System.Timers.Timer(10000);
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = true;
             timer.Enabled = true;
+            return true;
         }
 
         protected virtual void OnTimedEvent(Object source, ElapsedEventArgs e)

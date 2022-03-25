@@ -51,51 +51,57 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public void Create([FromBody] T entity)
+        public bool Create([FromBody] T entity)
         {
             try
             {
                 if (entity.IsValid())
                 {
                     _baseService.Create(entity);
+                    return true;
                 }
                 else
                 {
                     // HTTP error
+                    return false;
                 }
             }
             catch (System.Exception exception)
             {
-
                 Serilog.Log.Error(exception, "Error during saving, " + typeof(T).Name);
+                return false;
             }
 
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             try
             {
                 _baseService.Delete(id);
+                return true;
             }
             catch (System.Exception exception)
             {
                 Serilog.Log.Error(exception, "Error during deleting, " + typeof(T).Name);
+                return false;
             }
 
         }
 
         [HttpPut]
-        public void Update(T entity)
+        public bool Update(T entity)
         {
             try
             {
                 _baseService.Update(entity);
+                return true;
             }
             catch (System.Exception exception)
             {
                 Serilog.Log.Error(exception, "Error during updating, " + typeof(T).Name);
+                return false;
             }
 
         }

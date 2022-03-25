@@ -12,20 +12,21 @@ namespace Data.Repositories
     {
         public CityRepository(Database database) : base(database) { }
 
-        public override void Create(City city)
+        public override bool Create(City city)
         {
-            if (city.CityRuler != null)
-            {
-                var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == city.CityRuler.FirstName);
-                if (existingPerson != null)
+                if (city.CityRuler != null)
                 {
-                    var attachedPerson = database.Entry(existingPerson);
-                    attachedPerson.CurrentValues.SetValues(city.CityRuler);
-                    city.CityRuler = attachedPerson.Entity;
-                }  
-            }
-            database.Cities.Add(city);
-            database.SaveChanges();
+                    var existingPerson = database.Persons.FirstOrDefault(a => a.FirstName == city.CityRuler.FirstName);
+                    if (existingPerson != null)
+                    {
+                        var attachedPerson = database.Entry(existingPerson);
+                        attachedPerson.CurrentValues.SetValues(city.CityRuler);
+                        city.CityRuler = attachedPerson.Entity;
+                    }  
+                }
+                database.Cities.Add(city);
+                database.SaveChanges();
+                return true;          
         }
 
         public override City GetById(int id)
