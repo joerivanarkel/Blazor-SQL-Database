@@ -16,8 +16,8 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x       
-        password: ${{secrets.CONNECTIONSTRING}}
+        dotnet-version: 6.0.x    
+        appsettings.json: ${{secrets.APPSETTINGS}}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
