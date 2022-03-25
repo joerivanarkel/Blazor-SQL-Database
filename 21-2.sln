@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseFiller", "DatabaseF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessService", "ProcessService\ProcessService.csproj", "{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{D943D749-6798-4CA9-8BF9-FCC28DE7C743}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,9 @@ Global
 		{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C3BC623-FCF4-4CA0-8F1E-092601D45A77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D943D749-6798-4CA9-8BF9-FCC28DE7C743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D943D749-6798-4CA9-8BF9-FCC28DE7C743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D943D749-6798-4CA9-8BF9-FCC28DE7C743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D943D749-6798-4CA9-8BF9-FCC28DE7C743}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
