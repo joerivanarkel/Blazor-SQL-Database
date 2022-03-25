@@ -17,13 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Insert Connectionstring
-      uses: jacobtomlinson/gha-find-replace@v2
-      with:
-        find: "DatabaseConnection.Get()"
-        replace: ${{ secrets.CONNECTIONSTRING }}
-        regex: false
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+      env:
+        connectionstring: ${{ secrets.CONNECTIONSTRING }}
