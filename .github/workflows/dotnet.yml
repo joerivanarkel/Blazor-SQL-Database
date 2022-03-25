@@ -25,3 +25,5 @@ jobs:
         connectionstring: ${{ secrets.CONNECTIONSTRING }}
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      env:
+        connectionstring: ${{ secrets.CONNECTIONSTRING }}
