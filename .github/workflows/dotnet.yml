@@ -35,6 +35,8 @@ jobs:
     - uses: actions/checkout@v2
       with:
         dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
       env:
