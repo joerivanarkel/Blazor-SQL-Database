@@ -7,11 +7,10 @@ namespace Blazor
     {
         public static string Get()
         {
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Path.GetDirectoryName(System.AppContext.BaseDirectory))
-                .AddJsonFile("appsettings.json")
-                .Build();
-            return config.GetConnectionString("DefaultConnection");
+            var secretConfig = new ConfigurationBuilder()
+            .AddUserSecrets<Program>()
+            .Build();
+            return secretConfig["connectionstring"];
         }
     }
 }

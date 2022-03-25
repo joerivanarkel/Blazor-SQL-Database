@@ -455,3 +455,4 @@ $RECYCLE.BIN/
 
 ## Link to database
 */Migrations/*
+8. ProcessService/appsettings.json

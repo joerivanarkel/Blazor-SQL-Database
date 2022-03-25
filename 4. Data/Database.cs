@@ -2,7 +2,7 @@ using System.Security.Cryptography.X509Certificates;
 using Common;
 using Common.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration;
 
 namespace Data
 {
@@ -19,9 +19,10 @@ namespace Data
 
         public DbSet<ExistingCity> ExistingCities { get; set; }
 
+    
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(DatabaseConnection.Get());
+            optionsBuilder.UseSqlServer(DatabaseConnection<Data.Database>.Get());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

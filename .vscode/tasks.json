@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Blazor/Blazor.csproj",
+                "${workspaceFolder}/1. Blazor/Blazor.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Blazor/Blazor.csproj",
+                "${workspaceFolder}/1. Blazor/Blazor.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Blazor/Blazor.csproj"
+                "${workspaceFolder}/1. Blazor/Blazor.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

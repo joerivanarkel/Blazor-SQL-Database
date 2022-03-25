@@ -13,7 +13,7 @@ using Data.Repositories.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -53,12 +53,17 @@ columnOpts.Store.Add(StandardColumn.LogEvent);
 columnOpts.LogEvent.DataLength = 2048;
 columnOpts.TimeStamp.NonClusteredIndex = true;
 
+var secretConfig = new ConfigurationBuilder()
+    .AddUserSecrets<Program>()
+    .Build();
+
+
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning) 
     .WriteTo.MSSqlServer(
-        connectionString: DatabaseConnection.Get(),
+        connectionString = DatabaseConnection<Program>.Get(),
         sinkOptions: sinkOpts,
         columnOptions: columnOpts
     ).CreateLogger();

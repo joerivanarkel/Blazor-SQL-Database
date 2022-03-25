@@ -69,7 +69,7 @@ Serilog.Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning) 
     .WriteTo.MSSqlServer(
-        connectionString: DatabaseConnection.Get(),
+        connectionString = DatabaseConnection.Get(),
         sinkOptions: sinkOpts,
         columnOptions: columnOpts
     ).CreateLogger();

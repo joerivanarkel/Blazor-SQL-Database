@@ -7,9 +7,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/DatabaseFiller/bin/Debug/net6.0/DatabaseFiller.dll",
+            "program": "${workspaceFolder}/7. DatabaseFiller/bin/Debug/net6.0/DatabaseFiller.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/DatabaseFiller",
+            "cwd": "${workspaceFolder}/7. DatabaseFiller",
             "stopAtEntry": false,
             "console": "internalConsole"
         },
@@ -22,9 +22,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/API/bin/Debug/net6.0/API.dll",
+            "program": "${workspaceFolder}/2. API/bin/Debug/net6.0/API.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/API",
+            "cwd": "${workspaceFolder}/2. API",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {
@@ -47,9 +47,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Blazor/bin/Debug/net6.0/Blazor.dll",
+            "program": "${workspaceFolder}/1. Blazor/bin/Debug/net6.0/Blazor.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Blazor",
+            "cwd": "${workspaceFolder}/1. Blazor",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {
