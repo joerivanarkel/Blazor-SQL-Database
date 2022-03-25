@@ -21,6 +21,7 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Build
       run: dotnet build --no-restore
       env:
@@ -29,6 +30,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Test
       run: dotnet test --no-build --verbosity normal
       env:
