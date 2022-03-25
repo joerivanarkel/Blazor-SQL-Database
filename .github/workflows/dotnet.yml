@@ -26,7 +26,7 @@ jobs:
       env:
         connectionstring: ${{ secrets.CONNECTIONSTRING }}
   test:
-    needs: setup
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Test
