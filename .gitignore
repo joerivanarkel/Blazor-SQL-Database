@@ -454,5 +454,4 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 ## Link to database
-appsettings.json
 */Migrations/*

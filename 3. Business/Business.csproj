@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\Data\Data.csproj" />
+    <ProjectReference Include="..\5. Common\Common.csproj" />
+    <ProjectReference Include="..\4. Data\Data.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
