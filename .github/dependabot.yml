@@ -7,5 +7,6 @@ version: 2
 updates:
   - package-ecosystem: "nuget"
     directory: "/" # Location of package manifests
+    open-pull-requests-limit: 30
     schedule:
       interval: "daily"
